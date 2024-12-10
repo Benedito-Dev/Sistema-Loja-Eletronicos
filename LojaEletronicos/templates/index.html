@@ -10,7 +10,14 @@
 <body>
 
     <div class="main">
-        <img src="src/img/Logo.png" alt="Logo">
+        <img src="{% static 'img/Logo.png' %}" alt="Logo">
+        <div class="form">
+            <form action="" method="get">
+                <input type="email" name="Digite seu email" id="" placeholder="Digite seu Email">
+                <input type="password" name="Digite sua senha" id="" placeholder="Digite sua senha">
+            </form>
+            <button>Acessar</button>
+        </div>
     </div>
     
 </body>
