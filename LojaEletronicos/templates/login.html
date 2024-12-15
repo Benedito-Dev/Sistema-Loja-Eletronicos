@@ -21,21 +21,22 @@
             <div class="col-md-6">
                 <div id="card" class="d-grid align-items-center text-white shadow-lg p-4" style="min-height: 400px;">
                     <h1 class="text-center mb-20">Faça Login em sua conta</h1>
-                    <form>
+                    <form method="post" action="/">
+                        {% csrf_token %}
                         <div class="mb-3 input-group">
                             <span class="input-group-text bg-dark text-white"><i class='bx bxs-user-circle'></i></span>
-                            <input type="email" class="form-control" id="email" placeholder="Digite seu Email" required>
+                            <input name="email" type="email" class="form-control" id="email" placeholder="Digite seu Email" required>
                         </div>
                         <div class="mb-3 input-group">
                             <span class="input-group-text bg-dark text-white"><i class='bx bxs-lock'></i></span>
-                            <input type="password" class="form-control" id="senha" placeholder="Digite sua Senha" required>
+                            <input name="password" type="password" class="form-control" id="senha" placeholder="Digite sua Senha" required>
                         </div>
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="exibirSenha">
                             <label class="form-check-label" for="exibirSenha">Exibir Senha</label>
                         </div>
                         <div class="d-grid">
-                            <button type="button" class="btn btn-primary" id="logar">Entrar</button>
+                            <button type="submit" class="btn btn-primary" id="logar">Entrar</button>
                         </div>
                     </form>
                 </div>

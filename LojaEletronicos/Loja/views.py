@@ -1,7 +1,29 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib import messages  
 
-# Create your views here.
+def login(request):
+    if request.method == "POST":  # Apenas processa o login se for uma requisição POST
+        email = request.POST.get("email")  # Obtém o email do formulário enviado
+        password = request.POST.get("password")  # Obtém a senha do formulário enviado
+        
+        # Valida as credenciais fornecidas
+        try:
+            user = User.objects.get(email=email)  # Busca o usuário pelo email
+            #if user.check_password(password): Verifica se a senha fornecida está correta
+            if user.password == password:
+                # Caso as credenciais sejam válidas
+                messages.success(request, "Login bem-sucedido!")
+                return redirect('home')  # Redireciona para a página inicial ou outra página
+            else:
+                # Caso a senha esteja incorreta
+                messages.error(request, "Senha inválida!")
+        except User.DoesNotExist:
+            # Caso o email não exista no banco de dados
+            messages.error(request, "Usuário não encontrado!")
+    
+    # Caso não seja uma requisição POST ou tenha falhado o login
+    return render(request, 'login.html')  # Retorna à página de login
 
-def index(request):
-    return render(request, 'index.html')
+def home(request):
+    return render(request, 'home.html')
