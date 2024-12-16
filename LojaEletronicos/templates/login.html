@@ -37,6 +37,13 @@
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary" id="logar">Entrar</button>
+                            {% if messages %}
+                                <ul>
+                                    {% for message in messages %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                     </form>
                 </div>
