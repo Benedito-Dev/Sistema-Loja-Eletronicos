@@ -12,14 +12,15 @@ def login(request):
 
         # Remove espaços em branco extras
         email = email.strip()
+        print(email)
 
         try:
             # Verificar no banco de dados se o email existe
-            user = User.objects.get(email=email)
+            user = User.objects.get(email='beneditobittencourtt@gamil.com')
             print(f"Usuário encontrado: {user}")
 
             # Verificar se a senha está correta
-            if user.check_password(password):
+            if user.password == password:
                 # Caso as credenciais sejam válidas
                 messages.success(request, "Login bem-sucedido!")
                 return redirect('home')  # Redireciona para a página inicial ou outra página
