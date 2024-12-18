@@ -1,0 +1,31 @@
+.nav-top {
+    background-color: #373636;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100vw;
+    height: 3vw;
+}
+
+.nav-top h1 {
+    font-size: 1rem;
+}
+
+.nav-top input {
+    border-radius: 30px;
+    background-color: transparent;
+    border: none;
+    background-color: #808080;
+    display: flex;
+    justify-content: center;
+    width: 20vw;
+}
+
+.nav-top input::placeholder {
+    color: #343434;
+}
+
+body {
+    background-color: gray;
+}
+
