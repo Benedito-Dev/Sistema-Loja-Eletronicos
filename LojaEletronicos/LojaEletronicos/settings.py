@@ -126,6 +126,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Diretório onde os arquivos estáticos estão
 
+LOGIN_URL = '/' # Url de Login
+
+
+LOGIN_REDIRECT_URL = '/home/'  # URL da página inicial ou outra página após login
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

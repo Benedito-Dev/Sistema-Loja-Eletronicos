@@ -13,11 +13,17 @@
 
 <body>
 
-    <div class="nav-top">
+     <div class="nav-top">
         <a href="#">Logo</a>
+        <!-- <a href="#"><img src="{% static 'img/Logo-pequena.png' %}" alt=""></a> -->
         <input type="search" name="busca" id="" placeholder="Digite sua pesquisa...">
         <h1>Perfil da Empresa</h1>
-    </div>
+    </div> 
+
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
 
 </body>
 

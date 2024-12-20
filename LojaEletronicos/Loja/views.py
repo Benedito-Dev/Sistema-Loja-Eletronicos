@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login  # Funções para autenticação e login
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages  # Para mensagens de erro ou sucesso
 
 def login_view(request):
@@ -24,7 +25,7 @@ def login_view(request):
             if user is not None:
                 # Login do usuário (criação da sessão)
                 login(request, user)
-                messages.success(request, "Login bem-sucedido!")
+                messages.success(request, "")
                 return redirect('home')  # Redireciona para a home
             else:
                 messages.error(request, "Senha inválida!")
@@ -33,5 +34,9 @@ def login_view(request):
 
     return render(request, 'login.html')
 
+@login_required
 def home(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "Você precisa estar logado para acessar esta página.")
+        return redirect('')
     return render(request, 'home.html')
