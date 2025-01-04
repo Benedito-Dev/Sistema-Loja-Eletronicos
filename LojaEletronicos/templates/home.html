@@ -38,6 +38,15 @@
             padding: 1rem 0;
         }
 
+        .collapse {
+            transition: height 0.5s ease, opacity 0.5s ease;
+        }
+        
+        .collapsing {
+            height: auto;
+            opacity: 0.8;
+        }
+
         .sidebar a {
             text-decoration: none;
             color: #fff;
@@ -105,9 +114,9 @@
                 ☰
             </button>
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 collapse d-md-block sidebar">
-                <a href="#" class="dashboard">Dashboard</a>
+                <a href="{% url 'home' %}" class="dashboard active">Dashboard</a>
                 <a href="#" class="produtos">Produtos</a>
-                <a href="#" class="vendas">Vendas</a>
+                <a href="{% url 'vendas' %}" class="vendas">Vendas</a>
                 <a href="#" class="relatorios">Relatórios</a>
                 <a href="#" class="funcionarios">Funcionários</a>
                 <a href="#" class="configuracoes">Configurações</a>
@@ -132,7 +141,12 @@
     <script>
         // Seleciona todos os links do sidebar
         const sidebarLinks = document.querySelectorAll('#sidebarMenu a');
-    
+
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        sidebarMenu.addEventListener('show.bs.collapse', () => {
+            sidebarMenu.style.transition = 'all 0.5s ease-in-out';
+        });
+
         // Adiciona um evento de clique para cada link
         sidebarLinks.forEach(link => {
             link.addEventListener('click', () => {

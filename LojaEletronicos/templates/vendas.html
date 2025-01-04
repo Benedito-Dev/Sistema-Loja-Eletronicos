@@ -105,9 +105,9 @@
                 ☰
             </button>
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 collapse d-md-block sidebar">
-                <a href="#" class="dashboard">Dashboard</a>
+                <a href="{% url 'home' %}" class="dashboard">Dashboard</a>
                 <a href="#" class="produtos">Produtos</a>
-                <a href="#" class="vendas">Vendas</a>
+                <a href="{% url 'vendas' %}" class="vendas active">Vendas</a>
                 <a href="#" class="relatorios">Relatórios</a>
                 <a href="#" class="funcionarios">Funcionários</a>
                 <a href="#" class="configuracoes">Configurações</a>
