@@ -33,42 +33,42 @@ def login_view(request):
         except User.DoesNotExist:
             messages.error(request, "Usuário com este email não foi encontrado.")
 
-    return render(request, 'login.html')
+    return render(request, 'login/login.html')
 
 @login_required
 def home(request):
     if not request.user.is_authenticated:
         messages.error(request, "Você precisa estar logado para acessar esta página.")
         return redirect('')
-    return render(request, 'home.html')
+    return render(request, 'home/home.html')
 
 @login_required
 def produtos(request):
     if not request.user.is_authenticated:
         messages.error(request, "Você precisa estar logado para acessar esta página.")
         return redirect('')
-    return render(request, 'produtos.html')
+    return render(request, 'produtos/produtos.html')
 
 @login_required
 def vendas(request):
     if not request.user.is_authenticated:
         messages.error(request, "Você precisa estar logado para acessar esta página.")
         return redirect('')
-    return render(request, 'vendas.html')
+    return render(request, 'vendas/vendas.html')
 
 @login_required
 def relatorios(request):
     if not request.user.is_authenticated:
         messages.error(request, "Você precisa estar logado para acessar esta página.")
         return redirect('')
-    return render(request, 'relatorios.html')
+    return render(request, 'relatorios/relatorios.html')
 
 @login_required
 def funcionarios(request):
     if not request.user.is_authenticated:
         messages.error(request, "Você precisa estar logado para acessar esta página.")
         return redirect('')
-    return render(request, 'funcionarios.html')
+    return render(request, 'funcionarios/funcionarios.html')
 
 @login_required
 def configuracoes(request):
@@ -76,3 +76,12 @@ def configuracoes(request):
         messages.error(request, "Você precisa estar logado para acessar esta página.")
         return redirect('')
     return render(request, 'configuracoes.html')
+
+
+# SubPaginas
+
+@login_required
+def registrar_venda(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "Você precisa estar logado para acessar esta página.")
+    return render(request, 'vendas/registrar_venda.html')
