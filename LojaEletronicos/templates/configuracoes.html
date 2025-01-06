@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdgeTec Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    {% comment %} <style>
+        body {
+            background-color: #3a3a3a;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .nav-top {
+            background-color: #373636;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-top input {
+            border-radius: 30px;
+            background-color: #808080;
+            border: none;
+            color: #fff;
+        }
+
+        .nav-top input::placeholder {
+            color: #c0c0c0;
+        }
+
+        .sidebar {
+            background-color: #2a2a2a;
+            min-height: 100vh;
+            padding: 1rem 0;
+        }
+
+        .collapse {
+            transition: height 0.5s ease, opacity 0.5s ease;
+        }
+        
+        .collapsing {
+            height: auto;
+            opacity: 0.8;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .logout-form {
+            background-color: #dc3545;
+            border: none;
+            border-radius: 30px;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            transition: 160ms;
+            margin: 4vw;
+        }
+
+        .logout-form button {
+            background: none;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 160ms;
+        }
+
+        .logout-form:hover {
+            background-color: #c82333;
+            transform: scale(1.06);
+        }
+
+        .sidebar a:hover {
+            background-color: #373636;
+        }
+
+        .sidebar a.active {
+            background-color: #c82333; /* Cor para indicar o item ativo */
+            color: #fff; /* Cor do texto para contraste */
+            font-weight: bold; /* Deixe o texto mais chamativo */
+        }
+
+        .content {
+            background-color: #5c5c5c;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 0.5rem;
+        }
+    </style> {% endcomment %}
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="nav-top">
+        <div class="logo">Logo da Empresa</div>
+        <input type="search" class="form-control w-50 w-md-50" placeholder="Digite sua pesquisa...">
+        <div>Perfil da Empresa</div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <button class="btn btn-secondary d-md-none mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                ☰
+            </button>
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 collapse d-md-block sidebar">
+
+                {% comment %} Dropdown Dashboard {% endcomment %}
+                <div class="dropdown">
+                    <a href="{% url 'home' %}" class="dashboard">Dashboard <i class='bx bxs-down-arrow'></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Eletrônicos</a></li>
+                        <li><a href="#">Roupas</a></li>
+                        <li><a href="#">Móveis</a></li>
+                    </ul>
+                </div>
+
+                {% comment %} Dropdown Produtos {% endcomment %}
+                <div class="dropdown">
+                    <a href="{% url 'produtos' %}" class="produtos">Produtos <i class='bx bxs-down-arrow'></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Estoque <i class='bx bxs-inbox' ></i></a></li>
+                    </ul>
+                </div>
+                
+                {% comment %} Dropdown Vendas {% endcomment %}
+                <div class="dropdown">
+                    <a href="{% url 'vendas' %}" class="vendas">Vendas <i class='bx bxs-down-arrow'></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Registrar Venda <i class='bx bxs-wallet' ></i></a></li>
+                    </ul>
+                </div>
+
+                {% comment %} Dropdown Relatorios {% endcomment %}
+                <div class="dropdown">
+                    <a href="{% url 'relatorios' %}" class="relatorios">Relatórios <i class='bx bxs-down-arrow'></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Eletrônicos</a></li>
+                        <li><a href="#">Roupas</a></li>
+                        <li><a href="#">Móveis</a></li>
+                    </ul>
+                </div>
+
+                {% comment %} Dropdown Funcionarios {% endcomment %}
+                <div class="dropdown">
+                    <a href="{% url 'funcionarios' %}" class="funcionarios">Funcionários <i class='bx bxs-down-arrow'></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Cadastrar <i class='bx bx-plus-circle'></i></a></li>
+                        <li><a href="#">Editar <i class='bx bxs-pencil' ></i></a></li>
+                        <li><a href="#">Excluir <i class='bx bx-x'></i></a></li>
+                    </ul>
+                </div>
+
+                {% comment %} Configuracoes {% endcomment %}
+                <a href="{% url 'configuracoes' %}" class="configuracoes active">Configurações</a>
+
+                <form method="POST" action="{% url 'logout' %}" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 col-lg-10 d-flex justify-content-center align-items-center flex-column">
+                <div class="content">
+                    <h1>EDGETEC</h1>
+                    <h2>Bem-vindo ao painel de controle da empresa</h2>
+                    <p>Selecione uma Função</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Seleciona todos os links do sidebar
+        const sidebarLinks = document.querySelectorAll('#sidebarMenu a');
+
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        sidebarMenu.addEventListener('show.bs.collapse', () => {
+            sidebarMenu.style.transition = 'all 0.5s ease-in-out';
+        });
+
+        // Adiciona um evento de clique para cada link
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // Remove a classe "active" de todos os links
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                // Adiciona a classe "active" ao link clicado
+                link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

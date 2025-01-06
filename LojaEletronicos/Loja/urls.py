@@ -5,6 +5,10 @@ from . import views
 urlpatterns = [
     path('', views.login_view, name='login'),
     path('home/', views.home, name='home'),
+    path('produtos/', views.produtos, name='produtos'),
     path('vendas/', views.vendas, name='vendas'),
+    path('relatorios/', views.relatorios, name='relatorios'),
+    path('funcionarios/', views.funcionarios, name='funcionarios'),
+    path('config/', views.configuracoes, name='configuracoes'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),  # Redireciona para a página de login após o logout
 ]

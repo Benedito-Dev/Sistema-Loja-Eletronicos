@@ -43,8 +43,36 @@ def home(request):
     return render(request, 'home.html')
 
 @login_required
+def produtos(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "Você precisa estar logado para acessar esta página.")
+        return redirect('')
+    return render(request, 'produtos.html')
+
+@login_required
 def vendas(request):
     if not request.user.is_authenticated:
         messages.error(request, "Você precisa estar logado para acessar esta página.")
         return redirect('')
     return render(request, 'vendas.html')
+
+@login_required
+def relatorios(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "Você precisa estar logado para acessar esta página.")
+        return redirect('')
+    return render(request, 'relatorios.html')
+
+@login_required
+def funcionarios(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "Você precisa estar logado para acessar esta página.")
+        return redirect('')
+    return render(request, 'funcionarios.html')
+
+@login_required
+def configuracoes(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "Você precisa estar logado para acessar esta página.")
+        return redirect('')
+    return render(request, 'configuracoes.html')
