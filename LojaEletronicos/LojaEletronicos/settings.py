@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-q8hw1)z5lw2n=qt93j#hl7z!zqsz1b@k^qs3jh=k8u#rbv9)ph
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -88,6 +88,7 @@ DATABASES = {
 
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -124,6 +125,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Diretório onde os arquivos estáticos estão
+
+LOGIN_URL = '/' # Url de Login
+
+
+LOGIN_REDIRECT_URL = '/home/'  # URL da página inicial ou outra página após login
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
