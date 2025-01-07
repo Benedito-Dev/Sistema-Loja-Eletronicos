@@ -136,3 +136,6 @@ LOGIN_REDIRECT_URL = '/home/'  # URL da página inicial ou outra página após l
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login  # Funções para autenticação e login
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages  # Para mensagens de erro ou sucesso
+from django.contrib import messages # Para mensagens de erro ou sucesso
+from .models import Produto
+from .forms import ProdutoForms
 
 def login_view(request):
     if request.method == "POST":
@@ -77,11 +79,26 @@ def configuracoes(request):
         return redirect('')
     return render(request, 'configuracoes.html')
 
-
 # SubPaginas
-
 @login_required
 def registrar_venda(request):
     if not request.user.is_authenticated:
         messages.error(request, "Você precisa estar logado para acessar esta página.")
     return render(request, 'vendas/registrar_venda.html')
+
+def listar_produtos(request):
+    #busca todos os produtos no banco de dados
+    produtos = Produto.objects.all()
+    return render(request, 'produtos/lista_produtos.html', {'produtos': produtos})
+
+def adicionar_produtos(request):
+    if request.method == 'POST':
+        form = ProdutoForms(request.POST)
+        if form.is_valid():
+            form.save() #salva o produto no banco de dados se for valido.
+            return redirect('lista_produtos') #Redireciona para a lista produtos
+    else:
+        form = ProdutoForms()
+    
+    return render('adicionar_produtos.html', {'form': form} )
+
