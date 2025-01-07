@@ -139,7 +139,7 @@
                 <div class="dropdown">
                     <a href="{% url 'vendas' %}" class="vendas">Vendas <i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Registrar Venda <i class='bx bxs-wallet' ></i></a></li>
+                        <li><a href="{% url 'registrar_venda' %}">Registrar Venda <i class='bx bxs-wallet' ></i></a></li>
                     </ul>
                 </div>
 
@@ -196,10 +196,19 @@
         // Adiciona um evento de clique para cada link
         sidebarLinks.forEach(link => {
             link.addEventListener('click', () => {
+
                 // Remove a classe "active" de todos os links
                 sidebarLinks.forEach(l => l.classList.remove('active'));
+
                 // Adiciona a classe "active" ao link clicado
                 link.classList.add('active');
+
+                // Caso o link clicado seja uma subopção, adiciona "active" na opção principal
+                const parentDropdown = link.closest('.dropdown');
+                if (parentDropdown) {
+                    const parentLink = parentDropdown.querySelector('a');
+                    parentLink.classList.add('active');
+                }
             });
         });
     </script>
