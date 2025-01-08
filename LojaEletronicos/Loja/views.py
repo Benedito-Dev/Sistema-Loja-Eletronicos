@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from .models import Produto
 from django.contrib.auth import authenticate, login  # Funções para autenticação e login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages  # Para mensagens de erro ou sucesso
@@ -44,10 +44,12 @@ def home(request):
 
 @login_required
 def produtos(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "Você precisa estar logado para acessar esta página.")
-        return redirect('')
-    return render(request, 'produtos/produtos.html')
+    produtos = Produto.objects.all()
+    return render(request, 'produtos/produtos.html', {'produtos' : produtos})
+
+def listar_produtos(request):
+    produtos = Produto.objects.all()
+    return render(request, 'produtos/listar_produto.html ', {'produtos' : produtos})
 
 @login_required
 def vendas(request):
