@@ -90,7 +90,6 @@ def listar_produtos(request):
 
 
 def adicionar_produtos(request):
-    produtos = Produto.objects.all()
     if request.method == 'POST':
         nome = request.POST['nome']
         preco = request.POST['preco']
@@ -98,13 +97,13 @@ def adicionar_produtos(request):
         categoria = request.POST['categoria']
         marca = request.POST['marca']
 
-        produtos.objects.create(
+        Produto.objects.create(
             nome=nome,
             preco=preco,
             quant=quant,
             categoria=categoria,
             marca=marca
         )
-        return redirect('home/home')  # Redireciona para a lista de produtos
+        return redirect('home')  # Redireciona para a lista de produtos
 
     return render(request, 'produtos/adicionar_produtos.html')
