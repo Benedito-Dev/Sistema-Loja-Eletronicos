@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from .models import Produto
 from django.contrib.auth import authenticate, login  # Funções para autenticação e login
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages # Para mensagens de erro ou sucesso
-from .models import Produto
-from .forms import ProdutoForms
+from django.contrib import messages  # Para mensagens de erro ou sucesso
 
 def login_view(request):
     if request.method == "POST":
@@ -46,10 +44,8 @@ def home(request):
 
 @login_required
 def produtos(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "Você precisa estar logado para acessar esta página.")
-        return redirect('')
-    return render(request, 'produtos/produtos.html')
+    produtos = Produto.objects.all()
+    return render(request, 'produtos/produtos.html', {'produtos' : produtos})
 
 @login_required
 def vendas(request):
@@ -79,7 +75,9 @@ def configuracoes(request):
         return redirect('')
     return render(request, 'configuracoes.html')
 
+
 # SubPaginas
+
 @login_required
 def registrar_venda(request):
     if not request.user.is_authenticated:
@@ -87,18 +85,26 @@ def registrar_venda(request):
     return render(request, 'vendas/registrar_venda.html')
 
 def listar_produtos(request):
-    #busca todos os produtos no banco de dados
     produtos = Produto.objects.all()
-    return render(request, 'produtos/lista_produtos.html', {'produtos': produtos})
+    return render(request, 'produtos/listar_produto.html', {'produtos' : produtos})
+
 
 def adicionar_produtos(request):
+    produtos = Produto.objects.all()
     if request.method == 'POST':
-        form = ProdutoForms(request.POST)
-        if form.is_valid():
-            form.save() #salva o produto no banco de dados se for valido.
-            return redirect('lista_produtos') #Redireciona para a lista produtos
-    else:
-        form = ProdutoForms()
-    
-    return render('adicionar_produtos.html', {'form': form} )
+        nome = request.POST['nome']
+        preco = request.POST['preco']
+        quant = request.POST['quant']
+        categoria = request.POST['categoria']
+        marca = request.POST['marca']
 
+        produtos.objects.create(
+            nome=nome,
+            preco=preco,
+            quant=quant,
+            categoria=categoria,
+            marca=marca
+        )
+        return redirect('home/home')  # Redireciona para a lista de produtos
+
+    return render(request, 'produtos/adicionar_produtos.html')
