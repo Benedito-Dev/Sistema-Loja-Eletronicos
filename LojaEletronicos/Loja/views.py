@@ -49,7 +49,7 @@ def produtos(request):
 
 def listar_produtos(request):
     produtos = Produto.objects.all()
-    return render(request, 'produtos/listar_produto.html ', {'produtos' : produtos})
+    return render(request, 'produtos/listar_produto.html', {'produtos' : produtos})
 
 @login_required
 def vendas(request):

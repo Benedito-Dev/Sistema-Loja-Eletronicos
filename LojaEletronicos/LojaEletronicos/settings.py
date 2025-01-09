@@ -75,24 +75,24 @@ WSGI_APPLICATION = 'LojaEletronicos.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',  # Backend do PostgreSQL
+         'NAME': 'Django',                   # Nome do banco de dados PostgreSQL
+         'USER': 'postgres',                     # Usuário do PostgreSQL
+         'PASSWORD': 'postgres',                   # Senha do usuário
+         'HOST': 'localhost',                       # Endereço do servidor (ou IP)
+         'PORT': '5432',                            # Porta padrão do PostgreSQL
+     }
+ }
+
+
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',  # Backend do PostgreSQL
-#         'NAME': 'Django',                   # Nome do banco de dados PostgreSQL
-#         'USER': 'postgres',                     # Usuário do PostgreSQL
-#         'PASSWORD': 'postgres',                   # Senha do usuário
-#         'HOST': 'localhost',                       # Endereço do servidor (ou IP)
-#         'PORT': '5432',                            # Porta padrão do PostgreSQL
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
