@@ -37,10 +37,8 @@ def login_view(request):
 
 @login_required
 def home(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "Você precisa estar logado para acessar esta página.")
-        return redirect('')
-    return render(request, 'home/home.html')
+    nome = request.user.first_name
+    return render(request, 'home/home.html', {"nome": nome})
 
 @login_required
 def produtos(request):

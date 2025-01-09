@@ -1,3 +1,4 @@
+{% load static %} <!-- Carrega a tag estática -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,8 +7,7 @@
     <title>Edge Tech</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="img/Imagens.ico" type="image/x-icon">
-    {% load static %} <!-- Carrega a tag estática -->
+    <link rel="shortcut icon" href="{% static 'img/Imagens.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 </head>
 <body class="">
@@ -40,7 +40,7 @@
                             {% if messages %}
                                 <ul>
                                     {% for message in messages %}
-                                        <li>{{ message }}</li>
+                                        <p style="color: red;">{{ message }}</p>
                                     {% endfor %}
                                 </ul>
                             {% endif %}
