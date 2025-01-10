@@ -133,4 +133,18 @@ def editar_funcionario(request):
 
 def adicionar_funcionario(request):
     if request.method == "POST":
+        nome = request.POST['nome']
+        email = request.POST['email']
+        senha = request.POST['senha']
+        endereço = request.POST['endereco']
+        salario = request.POST['salario']
+        numero = request.POST['numero']
+        telefone = request.POST['telefone']
+        cargo = request.POST['cargo']
         
+
+    return render(request, 'funcionarios/adicionar_funcionario.html')
+
+
+
+
