@@ -123,8 +123,5 @@ def excluir_produtos(request):
         if produtos_selecionados:
             # Excluir os produtos selecionados
             Produto.objects.filter(id__in=produtos_selecionados).delete()
-            messages.success(request, 'Produtos excluídos com sucesso!')
-        else:
-            messages.error(request, 'Nenhum produto foi selecionado.')
 
     return redirect('listar_produtos')  # Redireciona para a página inicial (ou outra página de sua escolha)
