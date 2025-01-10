@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect # type: ignore
 from .models import Produto
 from django.contrib.auth import authenticate, login  # type: ignore # Funções para autenticação e login
 from django.contrib.auth.decorators import login_required # type: ignore
-from django.contrib import messages  # type: ignore # Para mensagens de erro ou sucesso
+from django.contrib import messages
+from django.contrib.auth.models import User 
+ # type: ignore # Para mensagens de erro ou sucesso
 
 def login_view(request):
     if request.method == "POST":
@@ -123,3 +125,7 @@ def excluir_produtos(request):
         # else:
         #     messages.error(request, 'Nenhum produto foi selecionado.')
     return redirect('listar_produtos')  # Substitua pelo nome da página onde está o formulário
+
+def editar_funcionario(request):
+    funcionarios = User.objects.all()
+    return render(request,'funcionarios/editar_funcionario.html', {'funcionarios': funcionarios})

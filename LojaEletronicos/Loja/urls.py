@@ -15,4 +15,5 @@ urlpatterns = [
     path('funcionarios/', views.funcionarios, name='funcionarios'),
     path('config/', views.configuracoes, name='configuracoes'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),  # Redireciona para a página de login após o logout
+    path('funcionarios/editar', views.editar_funcionario, name='editar_funcionario',)
 ]

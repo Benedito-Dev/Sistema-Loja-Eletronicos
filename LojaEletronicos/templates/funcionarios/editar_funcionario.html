@@ -8,13 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="{% static 'img/Imagens.ico' %}" type="image/x-icon">
-    <link href="{% static 'css/home.css' %}" rel="stylesheet">
-
+    <link href="{% static 'css/funcionarios/editar_funcionario.css' %}" rel="stylesheet">
 </head>
+
 <body>
     <!-- Top Navigation -->
     <nav class="nav-top">
-        <div class="logo">{{ nome }}</div>
+        <div class="logo">Logo da Empresa</div>
         <input type="search" class="form-control w-50 w-md-50" placeholder="Digite sua pesquisa...">
         <div>Perfil da Empresa</div>
     </nav>
@@ -29,7 +29,7 @@
 
                 {% comment %} Dropdown Dashboard {% endcomment %}
                 <div class="dropdown">
-                    <a href="{% url 'home' %}" class="dashboard active">Dashboard <i class='bx bxs-down-arrow'></i></a>
+                    <a href="{% url 'home' %}" class="dashboard">Dashboard <i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Eletrônicos</a></li>
                         <li><a href="#">Roupas</a></li>
@@ -39,7 +39,7 @@
 
                 {% comment %} Dropdown Produtos {% endcomment %}
                 <div class="dropdown">
-                    <a href="{% url 'produtos' %}" class="produtos">Produtos <i class='bx bxs-down-arrow'></i></a>
+                    <a href="{% url 'produtos' %}" class="produtos active">Produtos <i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'listar_produtos' %}">Estoque <i class='bx bxs-inbox' ></i></a></li>
                         <li><a href="{% url 'adicionar_produtos' %}">Adicionar Produtos <i class='bx bxs-add-to-queue'></i></a></li>
@@ -69,7 +69,7 @@
                     <a href="{% url 'funcionarios' %}" class="funcionarios">Funcionários <i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Cadastrar <i class='bx bx-plus-circle'></i></a></li>
-                        <li><a href="{% url 'editar_funcionario' %}">Editar</a><i class='bx bxs-pencil' ></i></a></li>
+                        <li><a href="{% url 'editar_funcionario' %}">Editar <i class='bx bxs-pencil' ></i></a></li>
                         <li><a href="#">Excluir <i class='bx bx-x'></i></a></li>
                     </ul>
                 </div>
@@ -83,16 +83,39 @@
                 </form>
             </nav>
 
-            <!-- Main Content -->
-            <main class="col-md-9 col-lg-10 d-flex justify-content-center align-items-center flex-column">
-                <div class="content">
-                    <h1>EDGETEC</h1>
-                    <h2>Bem-vindo ao painel de controle da empresa</h2>
-                    <p>Selecione uma Função</p>
-                </div>
-            </main>
-        </div>
-    </div>
+        <!-- Main Content -->
+        <main class="col-md-9 col-lg-10 d-flex justify-content-center align-items-center flex-column">
+            <div class="content w-100 p-4">
+                <h1 class="text-center mb-4">Lista de Funcionarios</h1>
+                <table class="table table-striped table-hover table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Selecionar</th>
+                            <th>Nome</th>
+    
+                    </thead>
+                    <tbody>
+                        {% for produto in produtos %}
+                        <tr>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="modernCheckbox" name="produtos_selecionados" value="{{ produto.id }}">
+                                <label class="form-check-label" for="modernCheckbox"></label>
+                            </td> <!-- Checkbox que captura o ID do produto -->
+                            <td>{{ User.nome }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center">Nenhum produto encontrado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <a href="{% url 'adicionar_produtos' %}" class="btn btn-primary mt-4">Adicionar Novo Produto</a>
+                <a href="{% url 'excluir_produtos' %}" class="btn btn-danger mt-4" id="Excluir"><strong>Excluir Produtos</strong></a>
+            </div>
+        </main>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
