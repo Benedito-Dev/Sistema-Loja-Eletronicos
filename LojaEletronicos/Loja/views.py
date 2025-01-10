@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect # type: ignore
 from .models import Produto
-from django.contrib.auth import authenticate, login  # type: ignore # Funções para autenticação e login
+from django.contrib.auth import authenticate, login, get_user_model # type: ignore # Funções para autenticação e login
 from django.contrib.auth.decorators import login_required # type: ignore
 from django.contrib import messages
 from django.contrib.auth.models import User 
  # type: ignore # Para mensagens de erro ou sucesso
 
 def login_view(request):
+    User = get_user_model()
+    user = User.objects.get(email=email)
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
@@ -141,7 +143,7 @@ def adicionar_funcionario(request):
         numero = request.POST['numero']
         telefone = request.POST['telefone']
         cargo = request.POST['cargo']
-        
+
 
     return render(request, 'funcionarios/adicionar_funcionario.html')
 
