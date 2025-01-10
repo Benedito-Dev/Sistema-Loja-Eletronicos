@@ -66,10 +66,10 @@
 
                 {% comment %} Dropdown Funcionarios {% endcomment %}
                 <div class="dropdown">
-                    <a href="{% url 'funcionarios' %}" class="funcionarios">Funcionários <i class='bx bxs-down-arrow'></i></a>
+                    <a href="{% url 'funcionarios' %}" class="funcionarios">Funcionários<i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Cadastrar <i class='bx bx-plus-circle'></i></a></li>
-                        <li><a href="{% url 'editar_funcionario' %}">Editar <i class='bx bxs-pencil' ></i></a></li>
+                        <li><a href="{% url 'editar_funcionario' %}">Editar <i class='bx bxs-pencil'></i></a></li>
                         <li><a href="#">Excluir <i class='bx bx-x'></i></a></li>
                     </ul>
                 </div>
@@ -95,13 +95,13 @@
     
                     </thead>
                     <tbody>
-                        {% for produto in produtos %}
+                        {% for user in funcionarios %}
                         <tr>
                             <td>
                                 <input class="form-check-input" type="checkbox" id="modernCheckbox" name="produtos_selecionados" value="{{ produto.id }}">
                                 <label class="form-check-label" for="modernCheckbox"></label>
                             </td> <!-- Checkbox que captura o ID do produto -->
-                            <td>{{ user.Username }}</td>
+                            <td>{{ user.username }}</td>
                         </tr>
                         {% empty %}
                         <tr>

@@ -126,6 +126,11 @@ def excluir_produtos(request):
         #     messages.error(request, 'Nenhum produto foi selecionado.')
     return redirect('listar_produtos')  # Substitua pelo nome da página onde está o formulário
 
+
 def editar_funcionario(request):
     funcionarios = User.objects.all()
     return render(request,'funcionarios/editar_funcionario.html', {'funcionarios': funcionarios})
+
+def adicionar_funcionario(request):
+    if request.method == "POST":
+        
