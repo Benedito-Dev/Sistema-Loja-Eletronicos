@@ -83,49 +83,50 @@
                 </form>
             </nav>
 
-            <!-- Main Content -->
-            <main class="col-md-9 col-lg-10 d-flex justify-content-center align-items-center flex-column">
-                <div class="content">
-
-                    {% comment %} Container de Produtos {% endcomment %}
-                    <div class="container">
-
-                        {% comment %} Colunas {% endcomment %}
-                        <div class="columns">
-                            <h1>Produto</h1>
-                            <h1>Quantidade</h1>
-                            <h1>Valor</h1>
-                        </div>
-
-                        {% comment %} Cada Produto Indidualmente {% endcomment %}
-                        <div class="item">
-
-                            {% comment %} Div para Armazenar Imagem E nome do Produto {% endcomment %}
-                            <div class="item-image">
-                                <img src="{% static 'img/produtos/jbl.webp' %}" alt="Imagem do Produto">
-                                <h2>Jbl Party Boombox 3</h2>
-                            </div>
-
-                            {% comment %} Div para Alterar Qunatidade do Produto {% endcomment %}
-                            <div class="item-quant">
-                                <button class="minus" onclick="decrement()">-</button>
-                                <div class="counter" id="counter">0</div>
-                                <button class="plus" onclick="increment()">+</button>
-                            </div>
-
-                            {% comment %} Div para Valor do Produto {% endcomment %}
-                            <div class="item-valor">
-                                <h2 id="preco-produto">R$ 2.669,00</h2>
-                            </div>
-
-                            <div class="item-total">
-                                <h3>Total: <span id="total">R$ 2.669,70</span></h3> <!-- Total calculado -->
-                            </div>
-
-                        </div>                
+        <!-- Main Content -->
+        <main class="col-md-9 col-lg-10 d-flex justify-content-center align-items-center flex-column">
+            <div class="content">
+                
+                    <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
+                                <tr>
+                                    <th>Imagem</th>
+                                    <th>Nome</th>
+                                    <th>Quantidade</th>
+                                    <th>Valor Unitário</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <img src="{% static 'img/produtos/jbl.webp' %}" alt="Imagem do Produto" style="width: 80px; height: auto;">
+                                    </td>
+                                    <td>
+                                        <h2>Jbl Party Boombox 3</h2>
+                                    </td>
+                                    <td>
+                                        <div class="item-quant">
+                                            <button class="minus" onclick="decrement()">-</button>
+                                            <div class="counter" id="counter">0</div>
+                                            <button class="plus" onclick="increment()">+</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h2 id="preco-produto">R$ 2.669,00</h2>
+                                    </td>
+                                    <td>
+                                        <h3>Total: <span id="total">R$ 2.669,70</span></h3>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-            </main>
+
+                <a href="{% url 'adicionar_produtos' %}" class="btn btn-primary mt-4">Adicionar Novo Produto</a>
+            </div>
+        </main>
         </div>
     </div>
 
