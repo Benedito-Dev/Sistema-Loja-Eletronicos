@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login  # Funções para autenticação e login
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages  # Para mensagens de erro ou sucesso
+from django.shortcuts import render, redirect # type: ignore
+from .models import Produto
+from django.contrib.auth import authenticate, login  # type: ignore # Funções para autenticação e login
+from django.contrib.auth.decorators import login_required # type: ignore
+from django.contrib import messages  # type: ignore # Para mensagens de erro ou sucesso
 
 def login_view(request):
     if request.method == "POST":
@@ -17,7 +17,7 @@ def login_view(request):
 
         try:
             # Verificar se o usuário existe pelo email (Django usa username por padrão)
-            from django.contrib.auth.models import User
+            from django.contrib.auth.models import User # type: ignore
             user = User.objects.get(email=email)
             print(f"Usuário encontrado: {user}")
 
@@ -42,10 +42,8 @@ def home(request):
 
 @login_required
 def produtos(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "Você precisa estar logado para acessar esta página.")
-        return redirect('')
-    return render(request, 'produtos/produtos.html')
+    produtos = Produto.objects.all()
+    return render(request, 'produtos/produtos.html', {'produtos' : produtos})
 
 @login_required
 def vendas(request):
@@ -83,3 +81,33 @@ def registrar_venda(request):
     if not request.user.is_authenticated:
         messages.error(request, "Você precisa estar logado para acessar esta página.")
     return render(request, 'vendas/registrar_venda.html')
+
+def listar_produtos(request):
+    produtos = Produto.objects.all()
+    return render(request, 'produtos/listar_produto.html', {'produtos' : produtos})
+
+
+def adicionar_produtos(request):
+    referer = request.META.get('HTTP_REFERER')  # Obtém a URL de onde o usuário veio
+    mostrar_botao = False
+    
+    if referer and 'produtos/listar' in referer:  # Substitua 'pagina-especifica' pela URL ou parte dela
+        mostrar_botao = True
+
+    if request.method == 'POST':
+        nome = request.POST['nome']
+        preco = request.POST['preco']
+        quant = request.POST['quant']
+        categoria = request.POST['categoria']
+        marca = request.POST['marca']
+
+        Produto.objects.create(
+            nome=nome,
+            preco=preco,
+            quant=quant,
+            categoria=categoria,
+            marca=marca
+        )
+        return redirect('listar_produtos')  # Redireciona para a lista de produtos
+
+    return render(request, 'produtos/adicionar_produtos.html', {'mostrar_botao': mostrar_botao})
