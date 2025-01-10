@@ -7,7 +7,8 @@
     <title>EdgeTec Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'img/Imagens.ico' %}" type="image/x-icon">
+    <link href="{% static 'css/produtos/listar.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -41,7 +42,7 @@
                     <a href="{% url 'produtos' %}" class="produtos active">Produtos <i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'listar_produtos' %}">Estoque <i class='bx bxs-inbox' ></i></a></li>
-                        <li><a href="{% url 'adicionar_produtos' %}">Adicionar Produtos <i class='bx bxs-inbox' ></i></a></li>
+                        <li><a href="{% url 'adicionar_produtos' %}">Adicionar Produtos <i class='bx bxs-add-to-queue'></i></a></li>
                     </ul>
                 </div>
                 
@@ -49,7 +50,7 @@
                 <div class="dropdown">
                     <a href="{% url 'vendas' %}" class="vendas">Vendas <i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Registrar Venda <i class='bx bxs-wallet' ></i></a></li>
+                        <li><a href="{% url 'registrar_venda' %}">Registrar Venda <i class='bx bxs-wallet' ></i></a></li>
                     </ul>
                 </div>
 
@@ -89,6 +90,7 @@
                 <table class="table table-striped table-hover table-bordered">
                     <thead class="table-dark">
                         <tr>
+                            <th>Selecionar</th>
                             <th>Nome</th>
                             <th>Preço</th>
                             <th>Quantidade</th>
@@ -99,6 +101,10 @@
                     <tbody>
                         {% for produto in produtos %}
                         <tr>
+                            <td>
+                                <input class="form-check-input" type="checkbox" id="modernCheckbox" name="produtos_selecionados" value="{{ produto.id }}">
+                                <label class="form-check-label" for="modernCheckbox"></label>
+                            </td> <!-- Checkbox que captura o ID do produto -->
                             <td>{{ produto.nome }}</td>
                             <td>R$ {{ produto.preco }}</td>
                             <td>{{ produto.quant }}</td>
@@ -107,13 +113,14 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="5" class="text-center">Nenhum produto encontrado.</td>
+                            <td colspan="6" class="text-center">Nenhum produto encontrado.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
 
                 <a href="{% url 'adicionar_produtos' %}" class="btn btn-primary mt-4">Adicionar Novo Produto</a>
+                <a href="{% url 'excluir_produtos' %}" class="btn btn-danger mt-4" id="Excluir"><strong>Excluir Produtos</strong></a>
             </div>
         </main>
 

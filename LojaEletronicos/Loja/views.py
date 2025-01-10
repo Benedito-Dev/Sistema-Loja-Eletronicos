@@ -86,7 +86,6 @@ def listar_produtos(request):
     produtos = Produto.objects.all()
     return render(request, 'produtos/listar_produto.html', {'produtos' : produtos})
 
-
 def adicionar_produtos(request):
     referer = request.META.get('HTTP_REFERER')  # Obtém a URL de onde o usuário veio
     mostrar_botao = False
@@ -111,3 +110,16 @@ def adicionar_produtos(request):
         return redirect('listar_produtos')  # Redireciona para a lista de produtos
 
     return render(request, 'produtos/adicionar_produtos.html', {'mostrar_botao': mostrar_botao})
+
+def excluir_produtos(request):
+    if request.method == 'POST':
+        # Capturar os IDs dos produtos selecionados
+        produtos_selecionados = request.POST.getlist('produtos_selecionados')
+        print(produtos_selecionados)
+        # if produtos_selecionados:
+        #     # Excluir os produtos selecionados
+        #     Produto.objects.filter(id__in=produtos_selecionados).delete()
+        #     messages.success(request, 'Produtos excluídos com sucesso!')
+        # else:
+        #     messages.error(request, 'Nenhum produto foi selecionado.')
+    return redirect('listar_produtos')  # Substitua pelo nome da página onde está o formulário
