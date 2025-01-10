@@ -142,8 +142,3 @@ body {
     margin-left: 5%;
 
 }
-
-.table-container {
-    max-height: 400px;  /* Defina a altura máxima de acordo com suas necessidades */
-    overflow-y: auto;   /* Ativa a rolagem vertical */
-}
