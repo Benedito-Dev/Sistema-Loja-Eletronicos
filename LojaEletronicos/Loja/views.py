@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect # type: ignore
 from .models import Produto
-from django.contrib.auth import authenticate, login  # Funções para autenticação e login
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages  # Para mensagens de erro ou sucesso
+from django.contrib.auth import authenticate, login  # type: ignore # Funções para autenticação e login
+from django.contrib.auth.decorators import login_required # type: ignore
+from django.contrib import messages  # type: ignore # Para mensagens de erro ou sucesso
 
 def login_view(request):
     if request.method == "POST":
@@ -17,7 +17,7 @@ def login_view(request):
 
         try:
             # Verificar se o usuário existe pelo email (Django usa username por padrão)
-            from django.contrib.auth.models import User
+            from django.contrib.auth.models import User # type: ignore
             user = User.objects.get(email=email)
             print(f"Usuário encontrado: {user}")
 
@@ -90,6 +90,12 @@ def listar_produtos(request):
 
 
 def adicionar_produtos(request):
+    referer = request.META.get('HTTP_REFERER')  # Obtém a URL de onde o usuário veio
+    mostrar_botao = False
+    
+    if referer and 'produtos/listar' in referer:  # Substitua 'pagina-especifica' pela URL ou parte dela
+        mostrar_botao = True
+
     if request.method == 'POST':
         nome = request.POST['nome']
         preco = request.POST['preco']
@@ -104,6 +110,6 @@ def adicionar_produtos(request):
             categoria=categoria,
             marca=marca
         )
-        return redirect('home')  # Redireciona para a lista de produtos
+        return redirect('listar_produtos')  # Redireciona para a lista de produtos
 
-    return render(request, 'produtos/adicionar_produtos.html')
+    return render(request, 'produtos/adicionar_produtos.html', {'mostrar_botao': mostrar_botao})
