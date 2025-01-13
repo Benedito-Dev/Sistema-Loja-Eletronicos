@@ -78,9 +78,8 @@ def configuracoes(request):
 
 @login_required
 def registrar_venda(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "Você precisa estar logado para acessar esta página.")
-    return render(request, 'vendas/registrar_venda.html')
+    produtos = Produto.objects.all()
+    return render(request, 'vendas/registrar_venda.html', {'produtos' : produtos})
 
 @login_required
 def listar_produtos(request):

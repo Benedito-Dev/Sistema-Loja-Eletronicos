@@ -87,21 +87,21 @@
         <main class="col-md-9 col-lg-10 d-flex justify-content-center align-items-center flex-column">
             <div class="content">
                 
-                    <div class="table-container" style="max-height: 400px; overflow-y: auto;">
-                        <table class="table table-striped table-hover table-bordered">
+                    <div class="table-container" style="max-height: 400px; overflow-y: auto; display: flex; justify-content: flex-start; flex-direction: column;">
+                        <h1 style="align-self: flex-start;"><i>Total : <span id="total" style="color: greenyellow;">R$ 2.669,70</span></i></h1>
+                        <table class="table table-striped table-hover table-bordered" style="margin-top: 2%;">
                             <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
                                 <tr>
-                                    <th>Imagem</th>
+                                    <th>Categoria</th>
                                     <th>Nome</th>
                                     <th>Quantidade</th>
                                     <th>Valor Unitário</th>
-                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>
-                                        <img src="{% static 'img/produtos/jbl.webp' %}" alt="Imagem do Produto" style="width: 80px; height: auto;">
+                                        <img src="{% static 'img/categorias/Som.png' %}" alt="Imagem do Produto" style="width: 80px; height: auto;">
                                     </td>
                                     <td>
                                         <h2>Jbl Party Boombox 3</h2>
@@ -116,15 +116,30 @@
                                     <td>
                                         <h2 id="preco-produto">R$ 2.669,00</h2>
                                     </td>
-                                    <td>
-                                        <h3>Total: <span id="total">R$ 2.669,70</span></h3>
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                <a href="{% url 'adicionar_produtos' %}" class="btn btn-primary mt-4">Adicionar Novo Produto</a>
+                    <div class="action-bar d-flex align-items-center justify-content-between mt-4">
+                        <div class="left-actions d-flex align-items-center gap-3" style="width: 45%;">
+                            <select id="categoria" name="categoria" class="form-control" required>
+                                <option value="">Selecione um produto ↓</option>
+                                {% for produto in produtos %}
+                                    <option value="{{ produto.id }}">{{ produto.nome }}</option>
+                                {% endfor %}
+                            </select>
+                            <a href="{% url 'adicionar_produtos' %}" class="btn btn-primary" style="width: 100%;">Adicionar produto</a>
+                        </div>
+                        <a href="{% url 'adicionar_produtos' %}" 
+                        class="btn btn-primary" 
+                        id="Registrar" 
+                        style="background-color: #049e18; border: none; color: white; transition: 160ms;"
+                        onmouseover="this.style.backgroundColor='#037a13'; this.style.color='#e0ffe3'; this.style.transform='scale(1.08)';"
+                        onmouseout="this.style.backgroundColor='#049e18'; this.style.color='white'; this.style.transform='scale(1)';">
+                        Registrar Venda ✔️
+                        </a>
+                    </div>
             </div>
         </main>
         </div>
