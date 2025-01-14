@@ -70,7 +70,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'adicionar_funcionario' %}">Cadastrar<i class='bx bx-plus-circle'></i></a></li>
                         <li><a href="{% url 'editar_funcionario' %}">Editar <i class='bx bxs-pencil'></i></a></li>
-                        <li><a href="#">Excluir <i class='bx bx-x'></i></a></li>
                     </ul>
                 </div>
 
@@ -119,8 +118,8 @@
                     </tbody>
                 </table>
 
-                <a href="{% url 'adicionar_produtos' %}" class="btn btn-primary mt-4">Adicionar Novo Produto</a>
-                <a href="{% url 'excluir_produtos' %}" class="btn btn-danger mt-4" id="Excluir"><strong>Excluir Produtos</strong></a>
+                <a href="{% url 'adicionar_funcionario' %}" class="btn btn-primary mt-4">Adicionar novo funcionario</a>
+                <a href="{% url 'excluir_produtos' %}" class="btn btn-danger mt-4" id="Excluir"><strong>Excluir Funcionario</strong></a>
             </div>
         </main>
 

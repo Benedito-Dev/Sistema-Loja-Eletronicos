@@ -144,6 +144,20 @@ def adicionar_funcionario(request):
         telefone = request.POST['telefone']
         cargo = request.POST['cargo']
 
+        get_user_model.objects.create(
+            nome=nome,
+            email=email,
+            senha=senha,
+            endereço=endereço,
+            salario=salario,
+            numero=numero,
+            telefone=telefone,
+            cargo=cargo
+        )
+        
+
+
+
 
     return render(request, 'funcionarios/adicionar_funcionario.html')
 

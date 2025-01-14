@@ -70,7 +70,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'adicionar_funcionario' %}">Cadastrar<i class='bx bx-plus-circle'></i></a></li>
                         <li><a href="{% url 'editar_funcionario' %}">Editar<i class='bx bxs-pencil' ></i></a></li>
-                        <li><a href="#">Excluir <i class='bx bx-x'></i></a></li>
                     </ul>
                 </div>
 
@@ -87,7 +86,7 @@
             <main class="col-md-9 col-lg-10 p-4 d-flex justify-content-center align-items-center flex-column">
                 <div class="content w-100 bg-dark p-5 rounded shadow">
                     <h1 class="text-center mb-4">Cadastrar funcionario</h1>
-                    <form action="{% url 'adicionar_produtos' %}" method="post" class="w-100">
+                    <form action="{% url 'adicionar_funcionario' %}" method="post" class="w-100">
                         {% csrf_token %}
                         <div class="row mb-3">
                             <div class="col-md-6">
