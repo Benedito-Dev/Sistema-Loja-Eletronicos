@@ -8,6 +8,9 @@ const tabelaCorpo = document.getElementById("tabela-corpo");
 
 // Evento: Seleção de categoria
  function adicionarProduto() {
+    // Obtendo url da pasta static
+    const staticPath = staticURL + "img/categorias/"
+
      // Obter o elemento <select> e a opção selecionada
      const select = document.getElementById("categoria");
      const selectedOption = select.options[select.selectedIndex];
@@ -29,6 +32,7 @@ const tabelaCorpo = document.getElementById("tabela-corpo");
      novaLinha.innerHTML = `
          <td>
              <h2>${produtoCategoria}</h2>
+             <img src="${staticPath + "SMARTPHONES.png"}" alt="${produtoCategoria}" style="width: 50px; height: 50px;" />
          </td>
          <td>
              <h2>${produtoNome}</h2>
