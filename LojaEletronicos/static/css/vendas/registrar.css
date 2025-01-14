@@ -194,18 +194,6 @@ body {
     gap: 2%;
 }
 
-.btn-primary#Registrar {
-    background-color: #049e18 !important; /* Força a aplicação */
-    border: none !important;
-    color: white !important;
-    transition: all 0.3s ease !important;
-}
-
-.btn-primary#Registrar:hover {
-    background-color: #037a13 !important; /* Cor ao passar o mouse */
-    color: #e0ffe3 !important; /* Texto ao passar o mouse */
-    transform: scale(1.05) !important;
-}
 
 .action-bar {
     display: flex;

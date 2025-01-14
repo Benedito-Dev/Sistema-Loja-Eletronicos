@@ -1,4 +1,3 @@
-console.log("Js Funcionando")
 const email = document.getElementById('email')
 const senha = document.getElementById('senha')
 const login = document.getElementById('logar')
