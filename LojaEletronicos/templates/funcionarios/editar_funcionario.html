@@ -92,6 +92,10 @@
                         <tr>
                             <th>Selecionar</th>
                             <th>Nome</th>
+                            <th>endereco</th>
+                            <th>salario</th>
+                            <th>telefone</th>
+                            <th>cargo</th>
     
                     </thead>
                     <tbody>
@@ -102,6 +106,10 @@
                                 <label class="form-check-label" for="modernCheckbox"></label>
                             </td> <!-- Checkbox que captura o ID do produto -->
                             <td>{{ user.username }}</td>
+                            <td>{{user.endereco}}</td>
+                            <td>{{user.salario}}</td>
+                            <td>{{user.telefone}}</td>
+                            <td>{{user.cargo}}</td>
                         </tr>
                         {% empty %}
                         <tr>

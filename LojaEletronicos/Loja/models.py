@@ -11,10 +11,10 @@ class Produto(models.Model):
     def __str__(self):
         return self.nome
     
-class CustomUSer(AbstractUser):
-    CPF = models.CharField(max_length=11)
-    endereco = models.CharField(max_length=100)
-    salario = models.DecimalField(max_digits=10, decimal_places=2)
-    telefone = models.CharField(15)
-    cargo = models.CharField(100)
+class CustomUser(AbstractUser):
+    CPF = models.CharField(max_length=11, default=12345678910)
+    endereco = models.CharField(max_length=100, default="rua topazio")
+    salario = models.DecimalField(max_digits=10, decimal_places=2, default=1000)
+    telefone = models.CharField(max_length=15, default=85986475337)
+    cargo = models.CharField(max_length=100, default="empregado")
     

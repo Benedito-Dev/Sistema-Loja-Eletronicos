@@ -3,26 +3,27 @@ from .models import Produto
 from django.contrib.auth import authenticate, login, get_user_model # type: ignore # Funções para autenticação e login
 from django.contrib.auth.decorators import login_required # type: ignore
 from django.contrib import messages
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
  # type: ignore # Para mensagens de erro ou sucesso
 
 def login_view(request):
-    User = get_user_model()
-    user = User.objects.get(email=email)
+    
     if request.method == "POST":
-        email = request.POST.get("email")
+        email = request.POST.get("email").strip()
         password = request.POST.get("password")
 
         # Remove espaços em branco extras
-        email = email.strip()
+        User = get_user_model()
+        #user = User.objects.get(email)
 
         # Teste para recebimento de dados
         print(f"Email recebido: '{email}', senha recebida: '{password}'")
 
         try:
             # Verificar se o usuário existe pelo email (Django usa username por padrão)
-            from django.contrib.auth.models import User # type: ignore
-            user = User.objects.get(email=email)
+            #from django.contrib.auth.models import User # type: ignore
+            User = get_user_model()
+            user = User.objects.get(email=email)#            user = User.objects.get(email=email)
             print(f"Usuário encontrado: {user}")
 
             # Autenticar o usuário usando username e senha
@@ -41,6 +42,7 @@ def login_view(request):
 
 @login_required
 def home(request):
+    user = get_user_model
     nome = request.user.first_name
     return render(request, 'home/home.html', {"nome": nome})
 
@@ -51,30 +53,27 @@ def produtos(request):
 
 @login_required
 def vendas(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "Você precisa estar logado para acessar esta página.")
-        return redirect('')
     return render(request, 'vendas/vendas.html')
 
 @login_required
 def relatorios(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "Você precisa estar logado para acessar esta página.")
-        return redirect('')
+    # if not request.user.is_authenticated:
+    #     messages.error(request, "Você precisa estar logado para acessar esta página.")
+    #     return redirect('')
     return render(request, 'relatorios/relatorios.html')
 
 @login_required
 def funcionarios(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "Você precisa estar logado para acessar esta página.")
-        return redirect('')
+    # if not request.user.is_authenticated:
+    #     messages.error(request, "Você precisa estar logado para acessar esta página.")
+    #     return redirect('')
     return render(request, 'funcionarios/funcionarios.html')
 
 @login_required
 def configuracoes(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "Você precisa estar logado para acessar esta página.")
-        return redirect('')
+    # if not request.user.is_authenticated:
+    #     messages.error(request, "Você precisa estar logado para acessar esta página.")
+    #     return redirect('')
     return render(request, 'configuracoes.html')
 
 
@@ -82,8 +81,8 @@ def configuracoes(request):
 
 @login_required
 def registrar_venda(request):
-    if not request.user.is_authenticated:
-        messages.error(request, "Você precisa estar logado para acessar esta página.")
+    # if not request.user.is_authenticated:
+    #     messages.error(request, "Você precisa estar logado para acessar esta página.")
     return render(request, 'vendas/registrar_venda.html')
 
 def listar_produtos(request):
@@ -130,7 +129,8 @@ def excluir_produtos(request):
 
 
 def editar_funcionario(request):
-    funcionarios = User.objects.all()
+    # User = get_user_model
+    funcionarios = get_user_model().objects.all()
     return render(request,'funcionarios/editar_funcionario.html', {'funcionarios': funcionarios})
 
 def adicionar_funcionario(request):
