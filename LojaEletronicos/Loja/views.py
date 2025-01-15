@@ -6,32 +6,30 @@ from django.contrib import messages
 from django.contrib.auth.models import User
  # type: ignore # Para mensagens de erro ou sucesso
 
+
 def login_view(request):
-    
     if request.method == "POST":
         email = request.POST.get("email").strip()
-        password = request.POST.get("password")
-
-        # Remove espaços em branco extras
-        User = get_user_model()
-        #user = User.objects.get(email)
+        password = request.POST.get("password").strip()
 
         # Teste para recebimento de dados
         print(f"Email recebido: '{email}', senha recebida: '{password}'")
 
+        User = get_user_model()
+
         try:
-            # Verificar se o usuário existe pelo email (Django usa username por padrão)
-            #from django.contrib.auth.models import User # type: ignore
-            User = get_user_model()
-            user = User.objects.get(email=email)#            user = User.objects.get(email=email)
+            # Buscar usuário pelo email
+            user = User.objects.get(email=email)
             print(f"Usuário encontrado: {user}")
 
-            # Autenticar o usuário usando username e senha
-            user = authenticate(request, username=user.username, password=password)
-            if user is not None:
-                # Login do usuário (criação da sessão)
-                login(request, user)
-                messages.success(request, "")
+            # Autenticar usando o username e a senha
+            authenticated_user = authenticate(request, username=user.username, password=password)
+            print(authenticated_user)
+
+            if authenticated_user is not None:
+                # Fazer login
+                login(request, authenticated_user)
+                messages.success(request, "Login realizado com sucesso!")
                 return redirect('home')  # Redireciona para a home
             else:
                 messages.error(request, "Senha inválida!")
@@ -144,7 +142,7 @@ def adicionar_funcionario(request):
         cargo = request.POST['cargo']
         User = get_user_model()
         
-        User.objects.create(
+        user = User.objects.create(
             username=nome,
             email=email,
             password=senha,
@@ -153,19 +151,19 @@ def adicionar_funcionario(request):
             telefone=telefone,
             cargo=cargo
         )   
-        User.set_password(senha)
-        User.save()
+        user.set_password(senha)
+        user.save()
     return render(request, 'funcionarios/adicionar_funcionario.html')
 
 def excluir_funcionario(request):
     if request.method == 'POST':
         User = get_user_model()
         # Capturar os IDs dos produtos selecionados
-        produtos_selecionados = request.POST.getlist('funcionarios_selecionados')
-        if produtos_selecionados:
-             # Excluir os produtos selecionados
-             User.objects.filter(id__in=produtos_selecionados).delete()
-             messages.success(request, 'Produtos excluídos com sucesso!')
-        else:
-             messages.error(request, 'Nenhum produto foi selecionado.')
+        funcionarios_selecionados = request.POST.getlist('funcionarios_selecionados')
+        print(funcionarios_selecionados)  # Imprima para depurar
+        # if funcionarios_selecionados:
+        #     User.objects.filter(id__in=funcionarios_selecionados).delete()
+        #     messages.success(request, 'Funcionários excluídos com sucesso!')
+        # else:
+        #     messages.error(request, 'Nenhum funcionário foi selecionado.')
     return redirect('editar_funcionario')  # Substitua pelo nome da página onde está o formulário
