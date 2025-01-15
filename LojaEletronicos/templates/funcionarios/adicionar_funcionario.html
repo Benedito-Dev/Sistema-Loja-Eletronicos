@@ -9,6 +9,11 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="{% static 'img/Imagens.ico' %}" type="image/x-icon">
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <script type="text/javascript">
+        function mostrarAlerta() {
+            alert('Cadastro realizado com sucesso!');
+        }
+    </script>
 </head>
 
 <body>
@@ -111,7 +116,7 @@
                                 <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Digite o endereço" required>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="telefone" name="telefone" class="form-control" maxlength="15" placeholder="Digite o seu numero" required>
+                                <input type="text" id="telefone" name="telefone" class="form-control" maxlength="15" placeholder="Digite o seu telefone" required>
                             </div>
                         </div>
 
@@ -120,11 +125,11 @@
                             <input type="text" id="cargo" name="cargo" class="form-control" placeholder="Digite o cargo" required>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="CPF", name="CPF" class="form-control" maxlength="11" placeholder="CPF sem pontos e traços" required>
+                                <input type="text" id="CPF" name="CPF" class="form-control" maxlength="11" placeholder="CPF sem pontos e traços" required>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">Cadastrar funcionario</button>
+                        <button type="submit" onclick="mostrarAlerta()" class="btn btn-primary w-100">Cadastrar funcionario</button>
             
                         <a href="{% url 'editar_funcionario' %}" class="btn btn-primary w-100 d-flex justify-content-center align-items-center" style="background-color: red; border: none; margin-top: 2%; margin-left: 2%; max-width: 20%;">
                           <i class="bx bx-arrow-back"></i> Voltar

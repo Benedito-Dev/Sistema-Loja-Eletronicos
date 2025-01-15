@@ -138,29 +138,34 @@ def adicionar_funcionario(request):
         nome = request.POST['nome']
         email = request.POST['email']
         senha = request.POST['senha']
-        endereço = request.POST['endereco']
+        endereco = request.POST['endereco']
         salario = request.POST['salario']
-        numero = request.POST['numero']
         telefone = request.POST['telefone']
         cargo = request.POST['cargo']
-
-        get_user_model.objects.create(
-            nome=nome,
+        User = get_user_model()
+        
+        User.objects.create(
+            username=nome,
             email=email,
-            senha=senha,
-            endereço=endereço,
+            password=senha,
+            endereco=endereco,
             salario=salario,
-            numero=numero,
             telefone=telefone,
             cargo=cargo
-        )
-        
-
-
-
-
+        )   
+        User.set_password(senha)
+        User.save()
     return render(request, 'funcionarios/adicionar_funcionario.html')
 
-
-
-
+def excluir_funcionario(request):
+    if request.method == 'POST':
+        User = get_user_model()
+        # Capturar os IDs dos produtos selecionados
+        produtos_selecionados = request.POST.getlist('funcionarios_selecionados')
+        if produtos_selecionados:
+             # Excluir os produtos selecionados
+             User.objects.filter(id__in=produtos_selecionados).delete()
+             messages.success(request, 'Produtos excluídos com sucesso!')
+        else:
+             messages.error(request, 'Nenhum produto foi selecionado.')
+    return redirect('editar_funcionario')  # Substitua pelo nome da página onde está o formulário
