@@ -6,6 +6,8 @@ const precoElemento = document.getElementById('preco-produto'); // Preço do pro
 const totalElemento = document.getElementById('total'); // Total
 const tabelaCorpo = document.getElementById("tabela-corpo");
 
+var staticURL = typeof staticURL !== 'undefined' ? staticURL : "/static/";
+
 // Evento: Seleção de categoria
  function adicionarProduto() {
     // Obtendo url da pasta static
