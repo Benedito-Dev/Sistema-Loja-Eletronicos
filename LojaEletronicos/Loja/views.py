@@ -125,11 +125,36 @@ def excluir_produtos(request):
         #     messages.error(request, 'Nenhum produto foi selecionado.')
     return redirect('listar_produtos')  # Substitua pelo nome da página onde está o formulário
 
+def gerenciar_funcionario(request):
+    if request.method == "POST":
+        User = get_user_model()
+        funcionarios_selecionados = request.POST.getlist('funcionarios_selecionados')
+        acao = request.POST.get("acao")
 
-def editar_funcionario(request):
+        if not funcionarios_selecionados:
+            messages.error(request, "Selecione pelo menos um funcionario.")
+            return redirect("listar_funcionarios")
+
+        if acao == "excluir":
+            # Lógica para excluir produtos
+            for funcionario_id in funcionarios_selecionados:
+                # Exclua o produto usando o ID
+                User.objects.filter(id=funcionario_id).delete()
+            return redirect("listar_funcionarios")
+        
+        elif acao == "editar":
+            # Lógica para redirecionar para a página de vendas com os produtos selecionados
+            if len(funcionarios_selecionados) > 1:
+                messages.error(request, "Selecione apenas um funcionario para editar.")
+
+                return redirect("editar_funcionario", funcionario_id=funcionarios_selecionados[0])
+
+    return redirect("listar_produtos")
+
+def listar_funcionario(request):
     # User = get_user_model
     funcionarios = get_user_model().objects.all()
-    return render(request,'funcionarios/editar_funcionario.html', {'funcionarios': funcionarios})
+    return render(request,'funcionarios/listar_funcionario.html', {'funcionarios': funcionarios})
 
 def adicionar_funcionario(request):
     if request.method == "POST":
@@ -160,10 +185,30 @@ def excluir_funcionario(request):
         User = get_user_model()
         # Capturar os IDs dos produtos selecionados
         funcionarios_selecionados = request.POST.getlist('funcionarios_selecionados')
-        print(funcionarios_selecionados)  # Imprima para depurar
-        # if funcionarios_selecionados:
-        #     User.objects.filter(id__in=funcionarios_selecionados).delete()
-        #     messages.success(request, 'Funcionários excluídos com sucesso!')
-        # else:
-        #     messages.error(request, 'Nenhum funcionário foi selecionado.')
+        if funcionarios_selecionados:
+             User.objects.filter(id__in=funcionarios_selecionados).delete()
+             messages.success(request, 'Funcionários excluídos com sucesso!')
+        else:
+             messages.error(request, 'Nenhum funcionário foi selecionado.')
     return redirect('editar_funcionario')  # Substitua pelo nome da página onde está o formulário
+
+def editar_funcionario(request):
+    if request.method == 'POST':
+        User = get_user_model()
+        # Capturar os IDs dos produtos selecionados
+        funcionarios_selecionados = request.POST.getlist('funcionarios_selecionados')
+        funcionario = User.objects.get(id=id)
+       
+        funcionario.nome = request.POST['nome']
+        funcionario.email = request.POST['email']
+        funcionario.endereco = request.POST['endereco']
+        funcionario.salario = request.POST['salario']
+        funcionario.telefone = request.POST['telefone']
+        funcionario.cargo = request.POST['cargo']
+        funcionario.save()
+        
+        messages.success(request, 'Funcionário editado com sucesso!')
+        return redirect(request, 'listar_funcionario.html')
+
+    return render(request, 'funcionarios/editar_funcionario.html', {'funcionarios': funcionarios})
+
