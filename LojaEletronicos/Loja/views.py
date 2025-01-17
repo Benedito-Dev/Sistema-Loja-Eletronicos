@@ -104,6 +104,7 @@ def gerenciar_produtos(request):
 def registrar_venda(request):
     # Recupera os produtos da sessão
     produtos_selecionados = request.session.get("produtos_para_venda", [])
+    produtos = Produto.objects.all()
 
     # Verifica se há produtos selecionados
     if not produtos_selecionados:
@@ -111,10 +112,10 @@ def registrar_venda(request):
         return redirect("listar_produtos")
 
     # Busca os objetos Produto correspondentes aos IDs
-    produtos = Produto.objects.filter(id__in=produtos_selecionados)
+    produtos_selecionados = Produto.objects.filter(id__in=produtos_selecionados)
 
     # Passa os produtos para o template
-    return render(request, 'vendas/registrar_venda.html', {'produtos': produtos})
+    return render(request, 'vendas/registrar_venda.html', {'produtos_selecionados': produtos_selecionados, 'produtos': produtos})
 
 @login_required
 def listar_produtos(request):

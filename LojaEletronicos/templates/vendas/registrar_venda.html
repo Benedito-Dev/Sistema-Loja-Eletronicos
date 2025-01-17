@@ -100,11 +100,38 @@
                                 </tr>
                             </thead>
                             <tbody id="tabela-corpo">
-                                {% for produto in produtos %}
+                                {% for produto in produtos_selecionados %}
                                 <tr>
                                     <td>
                                         <h2>{{ produto.categoria }}</h2>
-                                        {% comment %} <img src="{% static 'img/categorias/SOM.png' %}" alt="Imagem do Produto" style="width: 80px; height: auto;"> {% endcomment %}
+                                        
+                                        {% if produto.categoria == "Smartphones" %}
+                                        <img src="{% static 'img/categorias/SMARTPHONES.png' %}" alt="Smartphones" width="100">
+                                        {% elif produto.categoria == "Computadores e Notebooks" %}
+                                            <img src="{% static 'img/categorias/COMPUTADORES.png' %}" alt="Computadores e Notebooks" width="100">
+                                        {% elif produto.categoria == "TVs" %}
+                                            <img src="{% static 'img/categorias/TVS.png' %}" alt="TVs" width="100">
+                                        {% elif produto.categoria == "Áudio e Som" %}
+                                            <img src="{% static 'img/categorias/SOM.png' %}" alt="Áudio e Som" width="100">
+                                        {% elif produto.categoria == "Games e Consoles" %}
+                                            <img src="{% static 'img/categorias/CONSOLE.png' %}" alt="Games e Consoles" width="100">
+                                        {% elif produto.categoria == "Eletrodomésticos Portáteis" %}
+                                            <img src="{% static 'img/categorias/ELETROPORTATEIS.png' %}" alt="Eletrodomésticos Portáteis" width="100">
+                                        {% elif produto.categoria == "Acessórios" %}
+                                            <img src="{% static 'img/categorias/ACESSORIOS.png' %}" alt="Acessórios" width="100">
+                                        {% elif produto.categoria == "Câmeras e Fotografia" %}
+                                            <img src="{% static 'img/categorias/CAMERAS.png' %}" alt="Câmeras e Fotografia" width="100">
+                                        {% elif produto.categoria == "Automação Residencial" %}
+                                            <img src="{% static 'img/categorias/AUTOMACAO.png' %}" alt="Automação Residencial" width="100">
+                                        {% elif produto.categoria == "Componentes e Periféricos" %}
+                                            <img src="{% static 'img/categorias/PERIFERICOS.png' %}" alt="Componentes e Periféricos" width="100">
+                                        {% elif produto.categoria == "Redes e Conectividade" %}
+                                            <img src="{% static 'img/categorias/REDES.png' %}" alt="Redes e Conectividade" width="100">
+                                        {% elif produto.categoria == "Energia e Carregamento" %}
+                                            <img src="{% static 'img/categorias/ENERGIA.png' %}" alt="Energia e Carregamento" width="100">
+                                        {% else %}
+                                            <img src="{% static 'img/categorias/DEFAULT.png' %}" alt="Categoria Padrão" width="100">
+                                        {% endif %}
                                     </td>
                                     <td>
                                         <h2>{{ produto.nome }}</h2>
@@ -117,7 +144,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <h2 id="preco-produto">R$ 2.669,00</h2>
+                                        <h2 id="preco-produto">{{ produto.preco }}</h2>
                                     </td>
                                     <td>
                                         <button onclick="removerLinha(this)" class="btn btn-danger mt-4" >Remover</button>
@@ -134,9 +161,9 @@
                         <div class="left-actions d-flex align-items-center gap-3" style="width: 45%;">
                             <select id="categoria" class="form-control" required>
                                 <option value="">Selecione um produto ↓</option>
-                                {% for produto in produtos %}
-                                    <option value="{{ produto.id }}" data-nome="{{ produto.nome }}" data-preco="{{ produto.preco }}" data-categoria="{{ produto.categoria }}">
-                                        {{ produto.nome }}
+                                {% for item in produtos %}
+                                    <option value="{{ item.id }}" data-nome="{{ item.nome }}" data-preco="{{ item.preco }}" data-categoria="{{ item.categoria }}">
+                                        {{ item.nome }}
                                     </option>
                                 {% endfor %}
                             </select>

@@ -1,4 +1,7 @@
 // Seletores gerais
+document.addEventListener('DOMContentLoaded', function () {
+    atualizarTotal(); // Chama a função quando a página é carregada
+});
 const sidebarLinks = document.querySelectorAll('#sidebarMenu a');
 const sidebarMenu = document.getElementById('sidebarMenu');
 const counterElement = document.getElementById('counter'); // Contador de quantidade
@@ -90,7 +93,7 @@ var staticURL = typeof staticURL !== 'undefined' ? staticURL : "/static/";
              </div>
          </td>
          <td>
-             <h2 class="preco-produto">R$ ${produtoPreco.toFixed(2)}</h2>
+             <h2 id="preco-produto">R$ ${produtoPreco.toFixed(2)}</h2>
          </td>
          <td>
             <button onclick="removerLinha(this)" class="btn btn-danger mt-4" >Remover</button>
@@ -110,24 +113,23 @@ var staticURL = typeof staticURL !== 'undefined' ? staticURL : "/static/";
 
 // Função para atualizar o total
 function atualizarTotal() {
-    let total = 0; // Inicializa o total como 0
+    let total = 0;
+    const linhas = document.querySelectorAll('#tabela-corpo tr');
 
-    // Percorre todas as linhas da tabela
-    const linhas = tabelaCorpo.querySelectorAll("tr");
     linhas.forEach(linha => {
-        const counter = linha.querySelector('.counter'); // Pega o contador da linha
-        const precoElemento = linha.querySelector('.preco-produto'); // Pega o preço da linha
+        const precoElemento = linha.querySelector('#preco-produto');
+        const quantidadeElemento = linha.querySelector('.counter');
 
-        // Obtém a quantidade e o preço do produto
-        const quantidade = parseInt(counter.textContent);
-        const preco = parseFloat(precoElemento.textContent.replace('R$', '').replace(',', '.'));
-
-        // Soma o total para este produto
-        total += quantidade * preco;
+        if (precoElemento && quantidadeElemento) {
+            const preco = parseFloat(precoElemento.textContent.replace('R$', '').replace(',', '.'));
+            const quantidade = parseInt(quantidadeElemento.textContent);
+            total += preco * quantidade;
+        }
     });
 
-    // Atualiza o elemento de total formatado
-    totalElemento.textContent = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+    // Atualiza o total na tela
+    const totalElemento = document.getElementById('total');
+    totalElemento.textContent = `R$${total.toFixed(2).replace('.', ',')}`;
 }
 
 // Função para incrementar a quantidade
