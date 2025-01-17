@@ -96,15 +96,18 @@
                                     <th>Nome</th>
                                     <th>Quantidade</th>
                                     <th>Valor Unitário</th>
+                                    <th>Remover Produto</th>
                                 </tr>
                             </thead>
                             <tbody id="tabela-corpo">
+                                {% for produto in produtos %}
                                 <tr>
                                     <td>
-                                        <img src="{% static 'img/categorias/SOM.png' %}" alt="Imagem do Produto" style="width: 80px; height: auto;">
+                                        <h2>{{ produto.categoria }}</h2>
+                                        {% comment %} <img src="{% static 'img/categorias/SOM.png' %}" alt="Imagem do Produto" style="width: 80px; height: auto;"> {% endcomment %}
                                     </td>
                                     <td>
-                                        <h2>Jbl Party Boombox 3</h2>
+                                        <h2>{{ produto.nome }}</h2>
                                     </td>
                                     <td>
                                         <div class="item-quant">
@@ -116,7 +119,13 @@
                                     <td>
                                         <h2 id="preco-produto">R$ 2.669,00</h2>
                                     </td>
+                                    <td>
+                                        <button onclick="removerLinha(this)" class="btn btn-danger mt-4" >Remover</button>
+                                     </td>
                                 </tr>
+                                {% empty %}
+                                    <li>Nenhum produto selecionado.</li>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

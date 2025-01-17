@@ -77,9 +77,44 @@ def configuracoes(request):
 # SubPaginas
 
 @login_required
+def gerenciar_produtos(request):
+    if request.method == "POST":
+        produtos_selecionados = request.POST.getlist("produtos_selecionados")
+        acao = request.POST.get("acao")
+
+        if not produtos_selecionados:
+            messages.error(request, "Selecione pelo menos um produto.")
+            return redirect("listar_produtos")
+
+        if acao == "excluir":
+            # Lógica para excluir produtos
+            for produto_id in produtos_selecionados:
+                # Exclua o produto usando o ID
+                Produto.objects.filter(id=produto_id).delete()
+            return redirect("listar_produtos")
+        
+        elif acao == "vender":
+            # Lógica para redirecionar para a página de vendas com os produtos selecionados
+            request.session["produtos_para_venda"] = produtos_selecionados
+            return redirect("registrar_venda")
+
+    return redirect("listar_produtos")
+
+@login_required
 def registrar_venda(request):
-    produtos = Produto.objects.all()
-    return render(request, 'vendas/registrar_venda.html', {'produtos' : produtos})
+    # Recupera os produtos da sessão
+    produtos_selecionados = request.session.get("produtos_para_venda", [])
+
+    # Verifica se há produtos selecionados
+    if not produtos_selecionados:
+        messages.error(request, "Nenhum produto selecionado para venda.")
+        return redirect("listar_produtos")
+
+    # Busca os objetos Produto correspondentes aos IDs
+    produtos = Produto.objects.filter(id__in=produtos_selecionados)
+
+    # Passa os produtos para o template
+    return render(request, 'vendas/registrar_venda.html', {'produtos': produtos})
 
 @login_required
 def listar_produtos(request):

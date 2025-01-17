@@ -29,12 +29,55 @@ var staticURL = typeof staticURL !== 'undefined' ? staticURL : "/static/";
      const produtoPreco = parseFloat(selectedOption.getAttribute("data-preco"));
      const produtoCategoria = selectedOption.getAttribute("data-categoria");
 
+    // Determinar a imagem com base na categoria
+    let imagemSrc;
+    switch (produtoCategoria) {
+        case "Smartphones":
+            imagemSrc = staticPath + "SMARTPHONES.png";
+            break;
+        case "Computadores e Notebooks":
+            imagemSrc = staticPath + "COMPUTADORES.png";
+            break;
+        case "TVs":
+            imagemSrc = staticPath + "TVS.png";
+            break;
+        case "Áudio e Som":
+            imagemSrc = staticPath + "SOM.png";
+            break;
+        case "Games e Consoles":
+            imagemSrc = staticPath + "CONSOLE.png";
+            break;
+        case "Eletrodomésticos Portáteis":
+            imagemSrc = staticPath + "ELETROPORTATEIS.png";
+            break;
+        case "Acessórios":
+            imagemSrc = staticPath + "ACESSORIOS.png";
+            break;
+        case "Câmeras e Fotografia":
+            imagemSrc = staticPath + "CAMERAS.png";
+            break;
+        case "Automação Residencial":
+            imagemSrc = staticPath + "AUTOMACAO.png";
+            break;
+        case "Componentes e Periféricos":
+            imagemSrc = staticPath + "PERIFERICOS.png";
+            break;
+        case "Redes e Conectividade":
+            imagemSrc = staticPath + "REDES.png";
+            break;
+        case "Energia e Carregamento":
+            imagemSrc = staticPath + "ENERGIA.png";
+            break;
+        default:
+            imagemSrc = staticPath + "DEFAULT.png"; // Imagem padrão para categorias não listadas
+    }
+
      // Criar a nova linha
      const novaLinha = document.createElement("tr");
      novaLinha.innerHTML = `
          <td>
              <h2>${produtoCategoria}</h2>
-             <img src="${staticPath + "SMARTPHONES.png"}" alt="${produtoCategoria}" style="width: 50px; height: 50px;" />
+             <img src="${imagemSrc}" alt="${produtoCategoria}" style="width: 50px; height: 50px;" />
          </td>
          <td>
              <h2>${produtoNome}</h2>
@@ -48,6 +91,9 @@ var staticURL = typeof staticURL !== 'undefined' ? staticURL : "/static/";
          </td>
          <td>
              <h2 class="preco-produto">R$ ${produtoPreco.toFixed(2)}</h2>
+         </td>
+         <td>
+            <button onclick="removerLinha(this)" class="btn btn-danger mt-4" >Remover</button>
          </td>
      `;
 
@@ -64,10 +110,24 @@ var staticURL = typeof staticURL !== 'undefined' ? staticURL : "/static/";
 
 // Função para atualizar o total
 function atualizarTotal() {
-    const quantidade = parseInt(counterElement.textContent); // Obtém a quantidade do contador
-    const preco = parseFloat(precoElemento.textContent.replace('R$', '').replace(',', '').replace('.', '.')); // Converte o preço para número
-    const total = preco * quantidade; // Calcula o total
-    totalElemento.textContent = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`; // Atualiza o total formatado
+    let total = 0; // Inicializa o total como 0
+
+    // Percorre todas as linhas da tabela
+    const linhas = tabelaCorpo.querySelectorAll("tr");
+    linhas.forEach(linha => {
+        const counter = linha.querySelector('.counter'); // Pega o contador da linha
+        const precoElemento = linha.querySelector('.preco-produto'); // Pega o preço da linha
+
+        // Obtém a quantidade e o preço do produto
+        const quantidade = parseInt(counter.textContent);
+        const preco = parseFloat(precoElemento.textContent.replace('R$', '').replace(',', '.'));
+
+        // Soma o total para este produto
+        total += quantidade * preco;
+    });
+
+    // Atualiza o elemento de total formatado
+    totalElemento.textContent = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 }
 
 // Função para incrementar a quantidade
@@ -82,18 +142,32 @@ function increment(button) {
 // Função para decrementar a quantidade
 function decrement(button) {
     const counter = button.parentElement.querySelector('.counter');
-    let quantidade = parseInt(counter.textContent);
-    if (quantidade > 1) {
+    let quantidade = parseInt(counter.textContent || 0);
+    
+    if (quantidade > 0) {
         quantidade -= 1; // Decrementa
         counter.textContent = quantidade;
-        atualizarTotal();
+    } else {
+        alert('A quantidade não pode ser menor que zero!');
     }
+
+    atualizarTotal();
 }
 
 // Menu lateral: Mostrar/ocultar animação
 sidebarMenu.addEventListener('show.bs.collapse', () => {
     sidebarMenu.style.transition = 'all 0.5s ease-in-out';
 });
+
+function removerLinha(botao) {
+    const linha = botao.closest('tr'); // Encontra a linha correspondente
+    
+    // Confirmação antes de remover
+    if (confirm("Você tem certeza que deseja remover este produto?")) {
+        linha.remove(); // Remove a linha
+        atualizarTotal(); // Atualiza o total após a remoção
+    }
+}
 
 // Evento: Clique nos links do menu lateral
 sidebarLinks.forEach(link => {
