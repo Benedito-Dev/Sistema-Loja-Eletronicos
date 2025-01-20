@@ -44,7 +44,7 @@
 
                 {% comment %} Dropdown Produtos {% endcomment %}
                 <div class="dropdown">
-                    <a href="{% url 'produtos' %}" class="produtos active">Produtos <i class='bx bxs-down-arrow'></i></a>
+                    <a href="{% url 'produtos' %}" class="produtos">Produtos <i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'listar_produtos' %}">Estoque <i class='bx bxs-inbox' ></i></a></li>
                         <li><a href="{% url 'adicionar_produtos' %}">Adicionar Produtos <i class='bx bxs-add-to-queue'></i></a></li>
@@ -71,7 +71,7 @@
 
                 {% comment %} Dropdown Funcionarios {% endcomment %}
                 <div class="dropdown">
-                    <a href="{% url 'funcionarios' %}" class="funcionarios">Funcionários <i class='bx bxs-down-arrow'></i></a>
+                    <a href="{% url 'funcionarios' %}" class="funcionarios active">Funcionários <i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'listar_funcionarios' %}">Listar Funcionarios<i class='bx bxs-pencil' ></i></a></li>
                     </ul>
@@ -86,7 +86,7 @@
                 </form>
             </nav>
 
-            <!-- Main Content -->
+            <!-- Main Content --> 
             <main class="col-md-9 col-lg-10 p-4 d-flex justify-content-center align-items-center flex-column">
                 <div class="content w-100 bg-dark p-5 rounded shadow">
                     <h1 class="text-center mb-4">Cadastrar funcionario</h1>
@@ -130,7 +130,7 @@
 
                         <button type="submit" onclick="mostrarAlerta()" class="btn btn-primary w-100">Cadastrar funcionario</button>
             
-                        <a href="{% url 'editar_funcionario' %}" class="btn btn-primary w-100 d-flex justify-content-center align-items-center" style="background-color: red; border: none; margin-top: 2%; margin-left: 2%; max-width: 20%;">
+                        <a href="{% url 'listar_funcionarios'%}" class="btn btn-primary w-100 d-flex justify-content-center align-items-center" style="background-color: red; border: none; margin-top: 2%; margin-left: 2%; max-width: 20%;">
                           <i class="bx bx-arrow-back"></i> Voltar
                         </a>
                     </form>

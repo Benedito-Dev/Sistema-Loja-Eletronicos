@@ -19,5 +19,5 @@ urlpatterns = [
     path('funcionarios/listar', views.listar_funcionario, name='listar_funcionarios'),
     path('funcionario/cadastrar', views.adicionar_funcionario, name='adicionar_funcionario'),
     path('funcionario/excluir', views.excluir_funcionario, name='excluir_funcionario'),
-    path('funcionario/editar', views.editar_funcionario, name='editar_funcionario'),
+    path('funcionario/editar-funcionario/<int:funcionario_id>/', views.editar_funcionario, name='editar_funcionario'),
 ]

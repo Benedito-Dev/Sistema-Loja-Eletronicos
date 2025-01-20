@@ -146,10 +146,10 @@ def gerenciar_funcionario(request):
             # Lógica para redirecionar para a página de vendas com os produtos selecionados
             if len(funcionarios_selecionados) > 1:
                 messages.error(request, "Selecione apenas um funcionario para editar.")
+                return redirect("listar_funcionarios")  # Redireciona para evitar erro
 
-                return redirect("editar_funcionario", funcionario_id=funcionarios_selecionados[0])
-
-    return redirect("listar_produtos")
+            
+    return redirect("editar_funcionario",  funcionarios_selecionados[0])
 
 def listar_funcionario(request):
     # User = get_user_model
@@ -192,13 +192,11 @@ def excluir_funcionario(request):
              messages.error(request, 'Nenhum funcionário foi selecionado.')
     return redirect('editar_funcionario')  # Substitua pelo nome da página onde está o formulário
 
-def editar_funcionario(request):
-    if request.method == 'POST':
-        User = get_user_model()
-        # Capturar os IDs dos produtos selecionados
-        funcionarios_selecionados = request.POST.getlist('funcionarios_selecionados')
-        funcionario = User.objects.get(id=id)
-       
+def editar_funcionario(request, funcionario_id):
+    User = get_user_model()
+    funcionario = User.objects.get(id=funcionario_id)
+
+    if request.method == "POST":
         funcionario.nome = request.POST['nome']
         funcionario.email = request.POST['email']
         funcionario.endereco = request.POST['endereco']
@@ -206,9 +204,10 @@ def editar_funcionario(request):
         funcionario.telefone = request.POST['telefone']
         funcionario.cargo = request.POST['cargo']
         funcionario.save()
-        
-        messages.success(request, 'Funcionário editado com sucesso!')
-        return redirect(request, 'listar_funcionario.html')
 
-    return render(request, 'funcionarios/editar_funcionario.html', {'funcionarios': funcionarios})
+        messages.success(request, "Funcionário editado com sucesso!")
+        return redirect("listar_funcionarios")
+
+    return render(request, "funcionarios/editar_funcionario.html", {"funcionario": funcionario})
+
 

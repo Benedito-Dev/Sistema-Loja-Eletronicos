@@ -44,7 +44,7 @@
 
                 {% comment %} Dropdown Produtos {% endcomment %}
                 <div class="dropdown">
-                    <a href="{% url 'produtos' %}" class="produtos active">Produtos <i class='bx bxs-down-arrow'></i></a>
+                    <a href="{% url 'produtos' %}" class="produtos">Produtos <i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'listar_produtos' %}">Estoque <i class='bx bxs-inbox' ></i></a></li>
                         <li><a href="{% url 'adicionar_produtos' %}">Adicionar Produtos <i class='bx bxs-add-to-queue'></i></a></li>
@@ -71,7 +71,7 @@
 
                 {% comment %} Dropdown Funcionarios {% endcomment %}
                 <div class="dropdown">
-                    <a href="{% url 'funcionarios' %}" class="funcionarios">Funcionários <i class='bx bxs-down-arrow'></i></a>
+                    <a href="{% url 'funcionarios' %}" class="funcionarios active">Funcionários <i class='bx bxs-down-arrow'></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'listar_funcionarios' %}">Listar Funcionarios<i class='bx bxs-pencil' ></i></a></li>
                     </ul>
@@ -89,51 +89,44 @@
             <!-- Main Content -->
             <main class="col-md-9 col-lg-10 p-4 d-flex justify-content-center align-items-center flex-column">
                 <div class="content w-100 bg-dark p-5 rounded shadow">
-                    <h1 class="text-center mb-4">Cadastrar funcionario</h1>
-                    <form action="{% url 'adicionar_funcionario' %}" method="post" class="w-100">
-                        {% csrf_token %}
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <input type="text" id="nome" name="nome" class="form-control" placeholder="Digite o nome do funcionario" required>
+                    <h1 class="text-center mb-4">Editar funcionario</h1>
+                        <form method="POST">
+                            {% csrf_token %}
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <input type="text" id="nome" name="nome" class="form-control" value="{{ funcionario.username }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="number" id="salario" name="salario" class="form-control" value="{{ funcionario.salario }}" step="0.01" required>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <input type="number" id="salario" name="salario" class="form-control" placeholder="Digite o salario" step="0.01" required>
+                        
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <input type="email" id="email" name="email" class="form-control" value="{{ funcionario.email }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="cargo" name="cargo" class="form-control" value="{{ funcionario.cargo }}" required>
+                                </div>
                             </div>
-                        </div>
+                        
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <input type="text" id="endereco" name="endereco" class="form-control" value="{{ funcionario.endereco }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="telefone" name="telefone" class="form-control" maxlength="15" value="{{ funcionario.telefone }}" required>
+                                </div>
+                            </div>
+                        
+                            <button type="submit" onclick="mostrarAlerta()" class="btn btn-primary w-100">Editar funcionário</button>
+                        
+                            <a href="{% url 'listar_funcionarios' %}" class="btn btn-danger w-100 d-flex justify-content-center align-items-center mt-3">
+                                <i class="bx bx-arrow-back"></i> Voltar
+                            </a>
+                        </form>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Digite o seu email" required>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite a sua senha" required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Digite o endereço" required>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" id="telefone" name="telefone" class="form-control" maxlength="15" placeholder="Digite o seu telefone" required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                            <input type="text" id="cargo" name="cargo" class="form-control" placeholder="Digite o cargo" required>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" id="CPF" name="CPF" class="form-control" maxlength="11" placeholder="CPF sem pontos e traços" required>
-                            </div>
-                        </div>
-
-                        <button type="submit" onclick="mostrarAlerta()" class="btn btn-primary w-100">Cadastrar funcionario</button>
-            
-                        <a href="{% url 'editar_funcionario' %}" class="btn btn-primary w-100 d-flex justify-content-center align-items-center" style="background-color: red; border: none; margin-top: 2%; margin-left: 2%; max-width: 20%;">
-                          <i class="bx bx-arrow-back"></i> Voltar
-                        </a>
-                    </form>
                 </div>
             </main>
 
