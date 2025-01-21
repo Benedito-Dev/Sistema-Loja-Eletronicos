@@ -138,9 +138,9 @@
                                     </td>
                                     <td>
                                         <div class="item-quant">
-                                            <button class="minus" onclick="decrement()">-</button>
-                                            <div class="counter" id="counter">1</div>
-                                            <button class="plus" onclick="increment()">+</button>
+                                            <button class="minus" onclick="decrement(this)">-</button>
+                                            <div class="counter">1</div>
+                                            <button class="plus" onclick="increment(this)">+</button>
                                         </div>
                                     </td>
                                     <td>
@@ -171,7 +171,7 @@
                             onmouseover="this.style.backgroundColor='rgb(35, 135, 228)'; this.style.color='#e0ffe3'; this.style.transform='scale(1.08)';"
                             onmouseout="this.style.backgroundColor='rgb(35, 173, 228)'; this.style.color='white'; this.style.transform='scale(1)';">Adicionar Produto <i class='bx bx-message-square-add'></i></button>
                         </div>
-                        <a href="{% url 'adicionar_produtos' %}" 
+                        <a href="{% url 'confirmar_compra' %}" 
                         class="btn btn-primary" 
                         id="Registrar" 
                         style="background-color: #049e18; border: none; color: white; transition: 160ms;"

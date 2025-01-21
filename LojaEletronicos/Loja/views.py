@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect # type: ignore
+from django.http import JsonResponse # type: ignore
+import json
 from .models import Produto
 from django.contrib.auth import authenticate, login  # type: ignore # Funções para autenticação e login
 from django.contrib.auth.decorators import login_required # type: ignore
@@ -74,7 +76,76 @@ def configuracoes(request):
     return render(request, 'configuracoes.html')
 
 
-# SubPaginas
+# SubPaginas Vendas
+
+
+@login_required
+def registrar_venda(request):
+    # Recupera os produtos da sessão
+    produtos_selecionados = request.session.get("produtos_para_venda", [])
+    produtos = Produto.objects.all()
+
+    # Verifica se há produtos selecionados
+    if not produtos_selecionados:
+        messages.error(request, "Nenhum produto selecionado para venda.")
+        return redirect("listar_produtos")
+
+    # Busca os objetos Produto correspondentes aos IDs
+    produtos_selecionados = Produto.objects.filter(id__in=produtos_selecionados)
+
+    # Passa os produtos para o template
+    return render(request, 'vendas/registrar_venda.html', {'produtos_selecionados': produtos_selecionados, 'produtos': produtos})
+
+@login_required
+def confirmar_compra(request):
+    # Recupera os produtos da sessão
+    produtos_selecionados = request.session.get("produtos_para_venda", [])
+
+    # Verifica se há produtos selecionados
+    if not produtos_selecionados:
+        messages.error(request, "Nenhum produto selecionado para venda.")
+        return redirect("listar_produtos")
+
+    # Busca os objetos Produto correspondentes aos IDs
+    produtos_selecionados = Produto.objects.filter(id__in=produtos_selecionados)
+
+    # Passa os produtos para o template
+    return render(request, 'vendas/confirmar_compra.html', {'produtos_selecionados': produtos_selecionados})
+
+
+def remover_produto_carrinho(request):
+    if request.method == "POST":
+        try:
+            print("Requisição recebida!")
+            data = json.loads(request.body)
+            print(f"Dados recebidos: {data}")
+            produto_id = data.get('produto_id')
+            print(f"Produto ID: {produto_id}")
+
+            if produto_id is None:
+                print("ID do produto não fornecido.")
+                return JsonResponse({'error': 'ID do produto não fornecido.'}, status=400)
+
+            produtos = request.session.get('produtos_selecionados', [])
+            print(f"Produtos antes da remoção: {produtos}")
+            produtos = [p for p in produtos if p['id'] != produto_id]
+            print(f"Produtos após a remoção: {produtos}")
+
+            request.session['produtos_selecionados'] = produtos
+            request.session.modified = True
+
+            print("Produto removido com sucesso.")
+            return JsonResponse({'success': True})
+        except Exception as e:
+            print(f"Erro: {e}")
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        print("Método não permitido.")
+        return JsonResponse({'error': 'Método não permitido.'}, status=405)
+
+
+
+# SubPaginas Produtos
 
 @login_required
 def gerenciar_produtos(request):
@@ -96,26 +167,9 @@ def gerenciar_produtos(request):
         elif acao == "vender":
             # Lógica para redirecionar para a página de vendas com os produtos selecionados
             request.session["produtos_para_venda"] = produtos_selecionados
-            return redirect("registrar_venda")
+            return redirect("confirmar_compra")
 
     return redirect("listar_produtos")
-
-@login_required
-def registrar_venda(request):
-    # Recupera os produtos da sessão
-    produtos_selecionados = request.session.get("produtos_para_venda", [])
-    produtos = Produto.objects.all()
-
-    # Verifica se há produtos selecionados
-    if not produtos_selecionados:
-        messages.error(request, "Nenhum produto selecionado para venda.")
-        return redirect("listar_produtos")
-
-    # Busca os objetos Produto correspondentes aos IDs
-    produtos_selecionados = Produto.objects.filter(id__in=produtos_selecionados)
-
-    # Passa os produtos para o template
-    return render(request, 'vendas/registrar_venda.html', {'produtos_selecionados': produtos_selecionados, 'produtos': produtos})
 
 @login_required
 def listar_produtos(request):

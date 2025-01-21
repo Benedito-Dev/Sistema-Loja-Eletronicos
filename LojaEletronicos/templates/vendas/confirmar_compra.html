@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Compra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'img/Imagens.ico' %}" type="image/x-icon">
+    <link href="{% static 'css/vendas/registrar.css' %}" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+        }
+        .content-scroll {
+            max-height: 90vh; /* Limita o tamanho máximo à altura da janela */
+            overflow-y: auto; /* Adiciona o scroll vertical */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Navigation -->
+    <nav class="nav-top">
+        <div class="logo">Logo da Empresa</div>
+        <input type="search" class="form-control w-50 w-md-50" placeholder="Digite sua pesquisa...">
+        <div>Perfil da Empresa</div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <button class="btn btn-secondary d-md-none mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                ☰
+            </button>
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 collapse d-md-block sidebar">
+
+                {% comment %} Dropdown Dashboard {% endcomment %}
+                <div class="dropdown">
+                    <a href="{% url 'home' %}" class="dashboard">Dashboard <i class='bx bxs-down-arrow'></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Eletrônicos</a></li>
+                        <li><a href="#">Roupas</a></li>
+                        <li><a href="#">Móveis</a></li>
+                    </ul>
+                </div>
+
+                {% comment %} Dropdown Produtos {% endcomment %}
+                <div class="dropdown">
+                    <a href="{% url 'produtos' %}" class="produtos">Produtos <i class='bx bxs-down-arrow'></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'listar_produtos' %}">Estoque <i class='bx bxs-inbox' ></i></a></li>
+                        <li><a href="{% url 'adicionar_produtos' %}">Adicionar Produtos <i class='bx bxs-add-to-queue'></i></a></li>
+                    </ul>
+                </div>
+                
+                {% comment %} Dropdown Vendas {% endcomment %}
+                <div class="dropdown">
+                    <a href="{% url 'vendas' %}" class="vendas active">Vendas <i class='bx bxs-down-arrow'></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'registrar_venda' %}">Registrar Venda <i class='bx bxs-wallet' ></i></a></li>
+                    </ul>
+                </div>
+
+                {% comment %} Dropdown Relatorios {% endcomment %}
+                <div class="dropdown">
+                    <a href="{% url 'relatorios' %}" class="relatorios">Relatórios <i class='bx bxs-down-arrow'></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Eletrônicos</a></li>
+                        <li><a href="#">Roupas</a></li>
+                        <li><a href="#">Móveis</a></li>
+                    </ul>
+                </div>
+
+                {% comment %} Dropdown Funcionarios {% endcomment %}
+                <div class="dropdown">
+                    <a href="{% url 'funcionarios' %}" class="funcionarios">Funcionários <i class='bx bxs-down-arrow'></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Cadastrar <i class='bx bx-plus-circle'></i></a></li>
+                        <li><a href="#">Editar <i class='bx bxs-pencil' ></i></a></li>
+                        <li><a href="#">Excluir <i class='bx bx-x'></i></a></li>
+                    </ul>
+                </div>
+
+                {% comment %} Configuracoes {% endcomment %}
+                <a href="{% url 'configuracoes' %}" class="configuracoes">Configurações</a>
+
+                <form method="POST" action="{% url 'logout' %}" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </nav>
+
+            <main class="col-md-9 col-lg-10">
+                <div class="content-scroll mt-4">
+                    <div class="container mt-4">
+                        <!-- Título -->
+                        <h1 class="text-center mb-4">Confirmação de Compra</h1>
+
+                        <!-- Resumo dos Produtos -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">Resumo dos Produtos</div>
+                            <div class="card-body">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Remover</th>
+                                            <th>Produto</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço Unitário</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for produto in produtos_selecionados %}
+                                        <tr>
+                                            <td>
+                                                <button onclick="removerLinha()" class="btn btn-danger">X</button>
+                                            </td>
+                                            <td>{{ produto.nome }}</td>
+                                            <td>
+                                                <div class="item-quant">
+                                                    <button class="minus" onclick="decrement(this)">-</button>
+                                                    <div class="counter">1</div>
+                                                    <button class="plus" onclick="increment(this)">+</button>
+                                                </div>
+                                            </td>
+                                            <td class="price">R${{ produto.preco|floatformat:2 }}</td>
+                                            <td class="subtotal">R${{ produto.preco}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Cálculo de Valores -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">Detalhes do Pagamento</div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p>Total dos Produtos:</p>
+                                    <p id='total'>R${{ total_produtos|floatformat:2 }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p>Frete:</p>
+                                    <p>R${{ frete|default:"0.00" }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p>Impostos ({{ impostos_percentual }}%):</p>
+                                    <p>R${{ total_impostos|floatformat:2 }}</p>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between">
+                                    <h5>Total Final:</h5>
+                                    <h5 class="text-success">R${{ total_final|floatformat:2 }}</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Escolher Método de Pagamento -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">Método de Pagamento</div>
+                            <div class="card-body">
+                                <form method="POST" action="{% url 'adicionar_produtos' %}">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="metodoPagamento" class="form-label">Escolha o método de pagamento:</label>
+                                        <select id="metodoPagamento" class="form-select" name="metodo_pagamento" required>
+                                            <option value="cartao_credito">Cartão de Crédito</option>
+                                            <option value="boleto">Boleto Bancário</option>
+                                            <option value="pix">PIX</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-success w-100">Confirmar Compra</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Botão Voltar -->
+                        <div class="text-center">
+                            <a href="{% url 'vendas' %}" class="btn btn-secondary">Voltar para a Página de Vendas</a>
+                        </div>
+                    </div>
+                </div>    
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{% static 'js/vendas/teste.js' %}"></script>
+</body>
+</html>

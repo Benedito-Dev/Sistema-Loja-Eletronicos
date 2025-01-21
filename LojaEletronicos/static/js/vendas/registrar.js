@@ -9,106 +9,106 @@ const precoElemento = document.getElementById('preco-produto'); // Preço do pro
 const totalElemento = document.getElementById('total'); // Total
 const tabelaCorpo = document.getElementById("tabela-corpo");
 
-var staticURL = typeof staticURL !== 'undefined' ? staticURL : "/static/";
+// var staticURL = typeof staticURL !== 'undefined' ? staticURL : "/static/";
 
-// Evento: Seleção de categoria
- function adicionarProduto() {
-    // Obtendo url da pasta static
-    const staticPath = staticURL + "img/categorias/"
+// // Evento: Seleção de categoria
+//  function adicionarProduto() {
+//     // Obtendo url da pasta static
+//     const staticPath = staticURL + "img/categorias/"
 
-     // Obter o elemento <select> e a opção selecionada
-     const select = document.getElementById("categoria");
-     const selectedOption = select.options[select.selectedIndex];
+//      // Obter o elemento <select> e a opção selecionada
+//      const select = document.getElementById("categoria");
+//      const selectedOption = select.options[select.selectedIndex];
 
-     // Verifica se uma opção válida foi selecionada
-     if (selectedOption.value === "") {
-         alert("Por favor, selecione um produto.");
-         return;
-     }
+//      // Verifica se uma opção válida foi selecionada
+//      if (selectedOption.value === "") {
+//          alert("Por favor, selecione um produto.");
+//          return;
+//      }
 
-     // Dados do produto selecionado
-     const produtoId = selectedOption.value;
-     const produtoNome = selectedOption.getAttribute("data-nome");
-     const produtoPreco = parseFloat(selectedOption.getAttribute("data-preco"));
-     const produtoCategoria = selectedOption.getAttribute("data-categoria");
+//      // Dados do produto selecionado
+//      const produtoId = selectedOption.value;
+//      const produtoNome = selectedOption.getAttribute("data-nome");
+//      const produtoPreco = parseFloat(selectedOption.getAttribute("data-preco"));
+//      const produtoCategoria = selectedOption.getAttribute("data-categoria");
 
-    // Determinar a imagem com base na categoria
-    let imagemSrc;
-    switch (produtoCategoria) {
-        case "Smartphones":
-            imagemSrc = staticPath + "SMARTPHONES.png";
-            break;
-        case "Computadores e Notebooks":
-            imagemSrc = staticPath + "COMPUTADORES.png";
-            break;
-        case "TVs":
-            imagemSrc = staticPath + "TVS.png";
-            break;
-        case "Áudio e Som":
-            imagemSrc = staticPath + "SOM.png";
-            break;
-        case "Games e Consoles":
-            imagemSrc = staticPath + "CONSOLE.png";
-            break;
-        case "Eletrodomésticos Portáteis":
-            imagemSrc = staticPath + "ELETROPORTATEIS.png";
-            break;
-        case "Acessórios":
-            imagemSrc = staticPath + "ACESSORIOS.png";
-            break;
-        case "Câmeras e Fotografia":
-            imagemSrc = staticPath + "CAMERAS.png";
-            break;
-        case "Automação Residencial":
-            imagemSrc = staticPath + "AUTOMACAO.png";
-            break;
-        case "Componentes e Periféricos":
-            imagemSrc = staticPath + "PERIFERICOS.png";
-            break;
-        case "Redes e Conectividade":
-            imagemSrc = staticPath + "REDES.png";
-            break;
-        case "Energia e Carregamento":
-            imagemSrc = staticPath + "ENERGIA.png";
-            break;
-        default:
-            imagemSrc = staticPath + "DEFAULT.png"; // Imagem padrão para categorias não listadas
-    }
+//     // Determinar a imagem com base na categoria
+//     let imagemSrc;
+//     switch (produtoCategoria) {
+//         case "Smartphones":
+//             imagemSrc = staticPath + "SMARTPHONES.png";
+//             break;
+//         case "Computadores e Notebooks":
+//             imagemSrc = staticPath + "COMPUTADORES.png";
+//             break;
+//         case "TVs":
+//             imagemSrc = staticPath + "TVS.png";
+//             break;
+//         case "Áudio e Som":
+//             imagemSrc = staticPath + "SOM.png";
+//             break;
+//         case "Games e Consoles":
+//             imagemSrc = staticPath + "CONSOLE.png";
+//             break;
+//         case "Eletrodomésticos Portáteis":
+//             imagemSrc = staticPath + "ELETROPORTATEIS.png";
+//             break;
+//         case "Acessórios":
+//             imagemSrc = staticPath + "ACESSORIOS.png";
+//             break;
+//         case "Câmeras e Fotografia":
+//             imagemSrc = staticPath + "CAMERAS.png";
+//             break;
+//         case "Automação Residencial":
+//             imagemSrc = staticPath + "AUTOMACAO.png";
+//             break;
+//         case "Componentes e Periféricos":
+//             imagemSrc = staticPath + "PERIFERICOS.png";
+//             break;
+//         case "Redes e Conectividade":
+//             imagemSrc = staticPath + "REDES.png";
+//             break;
+//         case "Energia e Carregamento":
+//             imagemSrc = staticPath + "ENERGIA.png";
+//             break;
+//         default:
+//             imagemSrc = staticPath + "DEFAULT.png"; // Imagem padrão para categorias não listadas
+//     }
 
-     // Criar a nova linha
-     const novaLinha = document.createElement("tr");
-     novaLinha.innerHTML = `
-         <td>
-             <h2>${produtoCategoria}</h2>
-             <img src="${imagemSrc}" alt="${produtoCategoria}" style="width: 50px; height: 50px;" />
-         </td>
-         <td>
-             <h2>${produtoNome}</h2>
-         </td>
-         <td>
-             <div class="item-quant">
-                 <button class="minus" onclick="decrement(this)">-</button>
-                 <div class="counter">1</div>
-                 <button class="plus" onclick="increment(this)">+</button>
-             </div>
-         </td>
-         <td>
-             <h2 id="preco-produto">R$ ${produtoPreco.toFixed(2)}</h2>
-         </td>
-         <td>
-            <button onclick="removerLinha(this)" class="btn btn-danger mt-4" >Remover</button>
-         </td>
-     `;
+//      // Criar a nova linha
+//      const novaLinha = document.createElement("tr");
+//      novaLinha.innerHTML = `
+//          <td>
+//              <h2>${produtoCategoria}</h2>
+//              <img src="${imagemSrc}" alt="${produtoCategoria}" style="width: 50px; height: 50px;" />
+//          </td>
+//          <td>
+//              <h2>${produtoNome}</h2>
+//          </td>
+//          <td>
+//              <div class="item-quant">
+//                  <button class="minus" onclick="decrement(this)">-</button>
+//                  <div class="counter">1</div>
+//                  <button class="plus" onclick="increment(this)">+</button>
+//              </div>
+//          </td>
+//          <td>
+//              <h2 id="preco-produto">R$ ${produtoPreco.toFixed(2)}</h2>
+//          </td>
+//          <td>
+//             <button onclick="removerLinha(this)" class="btn btn-danger mt-4" >Remover</button>
+//          </td>
+//      `;
 
-     // Adicionar a nova linha na tabela
-     document.getElementById("tabela-corpo").appendChild(novaLinha);
+//      // Adicionar a nova linha na tabela
+//      document.getElementById("tabela-corpo").appendChild(novaLinha);
 
-     // Atualizar o total
-     atualizarTotal();
+//      // Atualizar o total
+//      atualizarTotal();
 
-     // Limpar a seleção do <select>
-     select.value = "";
- }
+//      // Limpar a seleção do <select>
+//      select.value = "";
+//  }
 
 
 // Função para atualizar o total
@@ -146,11 +146,11 @@ function decrement(button) {
     const counter = button.parentElement.querySelector('.counter');
     let quantidade = parseInt(counter.textContent || 0);
     
-    if (quantidade > 0) {
+    if (quantidade > 1) {
         quantidade -= 1; // Decrementa
         counter.textContent = quantidade;
     } else {
-        alert('A quantidade não pode ser menor que zero!');
+        alert('A quantidade não pode ser menor que 1!');
     }
 
     atualizarTotal();
@@ -161,14 +161,57 @@ sidebarMenu.addEventListener('show.bs.collapse', () => {
     sidebarMenu.style.transition = 'all 0.5s ease-in-out';
 });
 
-function removerLinha(botao) {
-    const linha = botao.closest('tr'); // Encontra a linha correspondente
-    
-    // Confirmação antes de remover
-    if (confirm("Você tem certeza que deseja remover este produto?")) {
-        linha.remove(); // Remove a linha
-        atualizarTotal(); // Atualiza o total após a remoção
+
+function removerLinha(button, produtoId) {
+    if (confirm("Tem certeza de que deseja remover este produto?")) {
+        fetch(`/remover-produto/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({'produto_id': produtoId})
+        })
+        .then(response => response.text())  // Mude para .text() para debugar a resposta
+        .then(data => {
+            console.log("Resposta recebida do servidor:", data);
+            try {
+                const jsonData = JSON.parse(data);
+                if (jsonData.success) {
+                    const row = button.closest('tr');
+                    row.remove();
+                    alert("Produto removido com sucesso.");
+                } else {
+                    alert("Erro ao remover o produto: " + jsonData.error);
+                }
+            } catch (e) {
+                console.error("Erro ao analisar a resposta JSON:", data);
+                alert("Ocorreu um erro ao tentar remover o produto.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+            alert("Ocorreu um erro ao tentar remover o produto.");
+        });
     }
+}
+
+
+
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
 
 // Evento: Clique nos links do menu lateral
