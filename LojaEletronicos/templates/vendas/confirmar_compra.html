@@ -97,6 +97,7 @@
                     <div class="container mt-4">
                         <!-- Título -->
                         <h1 class="text-center mb-4">Confirmação de Compra</h1>
+                        
 
                         <!-- Resumo dos Produtos -->
                         <div class="card mb-4">
@@ -116,7 +117,11 @@
                                         {% for produto in produtos_selecionados %}
                                         <tr>
                                             <td>
-                                                <button onclick="removerLinha(this)" class="btn btn-danger">X</button>
+                                                <form method="POST" action="{% url 'remover_carrinho' %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                                                    <button type="submit" class="btn btn-danger">X</button>
+                                                </form>
                                             </td>
                                             <td>{{ produto.nome }}</td>
                                             <td>
@@ -163,8 +168,12 @@
                         <div class="card mb-4">
                             <div class="card-header bg-dark text-white">Método de Pagamento</div>
                             <div class="card-body">
-                                <form method="POST" action="{% url 'adicionar_produtos' %}">
+                                <form method="POST" action="{% url 'payment' %}">
                                     {% csrf_token %}
+
+                                    <!-- <input type="text" name="total_final" value="{{ total_final }}"> -->
+                                    <input type="text" id="hidden_total" name="total_final" value="0">
+
                                     <div class="mb-3">
                                         <label for="metodoPagamento" class="form-label">Escolha o método de pagamento:</label>
                                         <select id="metodoPagamento" class="form-select" name="metodo_pagamento" required>
@@ -173,7 +182,7 @@
                                             <option value="pix">PIX</option>
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-success w-100">Confirmar Compra</button>
+                                    <button type="submit" class="btn btn-success w-100">Finalizar Compra</button>
                                 </form>
                             </div>
                         </div>

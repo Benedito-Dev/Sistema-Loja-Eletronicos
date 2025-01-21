@@ -1,5 +1,6 @@
 // Instanciando Variáveis
 const linhas = document.querySelectorAll('#tabela-corpo tr');
+const total_final = document.getElementById('Valor_total')
 
 // Função para atualizar os subtotais e o total
 function atualizarValores() {
@@ -22,6 +23,8 @@ function atualizarValores() {
 
     // Calcula os impostos (10% do total dos produtos)
     const impostos = totalProdutos * 0.10;
+    const hiddenTotalInput = document.getElementById('hidden_total');
+    console.log(hiddenTotalInput.value)
 
     // Atualiza os campos no HTML
     document.getElementById('total').textContent = `R$${totalProdutos.toFixed(2)}`;

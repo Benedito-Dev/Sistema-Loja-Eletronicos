@@ -112,36 +112,48 @@ def confirmar_compra(request):
     # Passa os produtos para o template
     return render(request, 'vendas/confirmar_compra.html', {'produtos_selecionados': produtos_selecionados})
 
+def payment(request):
+    if request.method == "POST":
+        total_final = request.POST.get("total_final")
+        metodo_pagamento = request.POST.get("metodo_pagamento")
+        print(metodo_pagamento)
+        print(total_final)
+
+        # Processar o pagamento aqui
+        # Exemplo de lógica:
+        if metodo_pagamento == "pix":
+            # Processar pagamento via Pix
+            pass
+
+        # Retorne uma resposta para o cliente
+        return render(request, 'vendas/payment.html')
+    return render(request, "produtos/listar_produto.html")
+    # Passa os produtos para o template
+
 
 def remover_produto_carrinho(request):
     if request.method == "POST":
-        try:
-            print("Requisição recebida!")
-            data = json.loads(request.body)
-            print(f"Dados recebidos: {data}")
-            produto_id = data.get('produto_id')
-            print(f"Produto ID: {produto_id}")
+        produto_id = request.POST.get("produto_id")
+        if produto_id:
+            produtos = request.session.get('produtos_para_venda', [])
+            
+            produtos_filtrados = []
+            for p in produtos:
+                if str(p) != produto_id:
+                    produtos_filtrados.append(p)
 
-            if produto_id is None:
-                print("ID do produto não fornecido.")
-                return JsonResponse({'error': 'ID do produto não fornecido.'}, status=400)
+            produtos = produtos_filtrados
 
-            produtos = request.session.get('produtos_selecionados', [])
-            print(f"Produtos antes da remoção: {produtos}")
-            produtos = [p for p in produtos if p['id'] != produto_id]
-            print(f"Produtos após a remoção: {produtos}")
+            request.session['produtos_para_venda'] = produtos
+            #request.session.modified = True
 
-            request.session['produtos_selecionados'] = produtos
-            request.session.modified = True
-
-            print("Produto removido com sucesso.")
-            return JsonResponse({'success': True})
-        except Exception as e:
-            print(f"Erro: {e}")
-            return JsonResponse({'error': str(e)}, status=500)
+            messages.success(request, "Produto Removido")
+        else:
+            messages.error(request, "Produto não encontrado para remoção.")
     else:
-        print("Método não permitido.")
-        return JsonResponse({'error': 'Método não permitido.'}, status=405)
+        messages.error(request, "Erro metodo post")
+
+    return redirect("confirmar_compra")  # Redireciona para a página de confirmação de compra
 
 
 

@@ -13,6 +13,7 @@ urlpatterns = [
     path('vendas/', views.vendas, name='vendas'),
     path('vendas/registrar/', views.registrar_venda, name='registrar_venda'),   # Subpágina Registrar Venda
     path('vendas/checkout/', views.confirmar_compra, name='confirmar_compra'),
+    path('vendas/payment/', views.payment, name='payment'),
     path('vendas/remover/', views.remover_produto_carrinho, name='remover_carrinho'), 
     path('relatorios/', views.relatorios, name='relatorios'),
     path('funcionarios/', views.funcionarios, name='funcionarios'),
