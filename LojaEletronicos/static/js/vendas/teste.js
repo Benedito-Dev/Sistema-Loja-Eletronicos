@@ -1,53 +1,63 @@
-// Instanciando Variaves
+// Instanciando Variáveis
 const linhas = document.querySelectorAll('#tabela-corpo tr');
 
+// Função para atualizar os subtotais e o total
+function atualizarValores() {
+    let totalProdutos = 0;
 
+    // Itera sobre cada linha de produto
+    document.querySelectorAll('tbody tr').forEach(function (linha) {
+        const precoElement = linha.querySelector('.price');
+        const quantidadeElement = linha.querySelector('.counter');
+        const subtotalElement = linha.querySelector('.subtotal');
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Função para atualizar os subtotais e o total
-    function atualizarValores() {
-        let totalProdutos = 0;
+        const preco = parseFloat(precoElement.textContent.replace('R$', '').replace(',', '.'));
+        const quantidade = parseInt(quantidadeElement.textContent);
 
-        // Itera sobre cada linha de produto
-        document.querySelectorAll('tbody tr').forEach(function (linha) {
-            const precoElement = linha.querySelector('.price');
-            const quantidadeElement = linha.querySelector('.counter');
-            const subtotalElement = linha.querySelector('.subtotal');
+        if (!isNaN(preco) && !isNaN(quantidade)) {
+            const subtotal = preco * quantidade;
+            subtotalElement.textContent = `R$${subtotal.toFixed(2)}`;
+            totalProdutos += subtotal;
+        }
+    });
 
-            const preco = parseFloat(precoElement.textContent.replace('R$', '').replace(',', '.'));
-            const quantidade = parseInt(quantidadeElement.textContent);
+    // Atualiza o total dos produtos no resumo
+    const totalElement = document.getElementById('total');
+    totalElement.textContent = `R$${totalProdutos.toFixed(2)}`;
+}
 
-            if (!isNaN(preco) && !isNaN(quantidade)) {
-                const subtotal = preco * quantidade;
-                subtotalElement.textContent = `R$${subtotal.toFixed(2)}`;
-                totalProdutos += subtotal;
-            }
-        });
+// Função para incrementar a quantidade
+function increment(button) {
+    const counterElement = button.parentElement.querySelector('.counter');
+    let quantidade = parseInt(counterElement.textContent);
+    counterElement.textContent = quantidade + 1;
+    atualizarValores();
+}
 
-        // Atualiza o total dos produtos no resumo
-        const totalElement = document.getElementById('total');
-        totalElement.textContent = `R$${totalProdutos.toFixed(2)}`;
-    }
+// Função para decrementar a quantidade
+function decrement(button) {
+    const counterElement = button.parentElement.querySelector('.counter');
+    let quantidade = parseInt(counterElement.textContent);
 
-    // Função para incrementar a quantidade
-    function increment(button) {
-        const counterElement = button.parentElement.querySelector('.counter');
-        let quantidade = parseInt(counterElement.textContent);
-        counterElement.textContent = quantidade + 1;
+    if (quantidade > 1) { // Evita que a quantidade fique abaixo de 1
+        counterElement.textContent = quantidade - 1;
         atualizarValores();
     }
+}
 
-    // Função para decrementar a quantidade
-    function decrement(button) {
-        const counterElement = button.parentElement.querySelector('.counter');
-        let quantidade = parseInt(counterElement.textContent);
-
-        if (quantidade > 1) { // Evita que a quantidade fique abaixo de 1
-            counterElement.textContent = quantidade - 1;
-            atualizarValores();
-        }
+// Remover Produto
+function removerLinha(botao) {
+    const linha = botao.closest('tr'); // Encontra a linha correspondente
+    
+    // Confirmação antes de remover
+    if (confirm("Você tem certeza que deseja remover este produto?")) {
+        linha.remove(); // Remove a linha
+        atualizarValores(); // Atualiza o total após a remoção
     }
+}
 
+// Adicionando listeners quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function () {
     // Adiciona os event listeners para os botões de incrementar e decrementar
     document.querySelectorAll('.plus').forEach(function (button) {
         button.addEventListener('click', function () {
@@ -64,15 +74,3 @@ document.addEventListener('DOMContentLoaded', function () {
     // Atualiza os valores na inicialização
     atualizarValores();
 });
-
-
-// Remover Produto
-function removerLinha(botao) {
-    const linha = botao.closest('tr'); // Encontra a linha correspondente
-    
-    // Confirmação antes de remover
-    if (confirm("Você tem certeza que deseja remover este produto?")) {
-        linha.remove(); // Remove a linha
-        atualizarTotal(); // Atualiza o total após a remoção
-    }
-}

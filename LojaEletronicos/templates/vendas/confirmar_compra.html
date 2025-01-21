@@ -116,7 +116,7 @@
                                         {% for produto in produtos_selecionados %}
                                         <tr>
                                             <td>
-                                                <button onclick="removerLinha()" class="btn btn-danger">X</button>
+                                                <button onclick="removerLinha(this)" class="btn btn-danger">X</button>
                                             </td>
                                             <td>{{ produto.nome }}</td>
                                             <td>
