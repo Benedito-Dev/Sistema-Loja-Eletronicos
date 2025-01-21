@@ -121,9 +121,9 @@
                                             <td>{{ produto.nome }}</td>
                                             <td>
                                                 <div class="item-quant">
-                                                    <button class="minus" onclick="decrement(this)">-</button>
+                                                    <button class="minus" onclick="decrement()">-</button>
                                                     <div class="counter">1</div>
-                                                    <button class="plus" onclick="increment(this)">+</button>
+                                                    <button class="plus" onclick="increment()">+</button>
                                                 </div>
                                             </td>
                                             <td class="price">R${{ produto.preco|floatformat:2 }}</td>
@@ -148,8 +148,8 @@
                                     <p>R${{ frete|default:"0.00" }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <p>Impostos ({{ impostos_percentual }}%):</p>
-                                    <p>R${{ total_impostos|floatformat:2 }}</p>
+                                    <p>Impostos (10%):</p> <!-- O cálculo do valor dos impostos é baseado em 10% -->
+                                    <p class="impostos">R${{ total_impostos|floatformat:2 }}</p>
                                 </div>
                                 <hr>
                                 <div class="d-flex justify-content-between">

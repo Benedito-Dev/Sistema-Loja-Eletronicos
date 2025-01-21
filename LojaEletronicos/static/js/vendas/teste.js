@@ -19,6 +19,17 @@ function atualizarValores() {
             subtotalElement.textContent = `R$${subtotal.toFixed(2)}`;
             totalProdutos += subtotal;
         }
+
+    // Calcula os impostos (10% do total dos produtos)
+    const impostos = totalProdutos * 0.10;
+
+    // Atualiza os campos no HTML
+    document.getElementById('total').textContent = `R$${totalProdutos.toFixed(2)}`;
+    document.querySelector('.impostos').textContent = `R$${impostos.toFixed(2)}`;
+
+
+    const totalFinal = totalProdutos + impostos;
+    document.querySelector('.text-success').textContent = `R$${totalFinal.toFixed(2)}`;
     });
 
     // Atualiza o total dos produtos no resumo
