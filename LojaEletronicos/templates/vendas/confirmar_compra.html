@@ -116,7 +116,11 @@
                                         {% for produto in produtos_selecionados %}
                                         <tr>
                                             <td>
-                                                <button onclick="removerLinha(this)" class="btn btn-danger">X</button>
+                                                <form method="POST" action="{% url 'remover_carrinho' %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                                                    <button type="submit" class="btn btn-danger">X</button>
+                                                </form>
                                             </td>
                                             <td>{{ produto.nome }}</td>
                                             <td>
