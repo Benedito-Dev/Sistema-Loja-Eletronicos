@@ -28,11 +28,14 @@ function atualizarValores() {
 
     // Atualiza os campos no HTML
     document.getElementById('total').textContent = `R$${totalProdutos.toFixed(2)}`;
+    input = document.getElementById('hidden_total')
     document.querySelector('.impostos').textContent = `R$${impostos.toFixed(2)}`;
 
 
     const totalFinal = totalProdutos + impostos;
     document.querySelector('.text-success').textContent = `R$${totalFinal.toFixed(2)}`;
+
+    input.value = totalFinal.toFixed(2)
     });
 
     // Atualiza o total dos produtos no resumo
