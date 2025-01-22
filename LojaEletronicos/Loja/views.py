@@ -112,6 +112,7 @@ def confirmar_compra(request):
     # Passa os produtos para o template
     return render(request, 'vendas/confirmar_compra.html', {'produtos_selecionados': produtos_selecionados})
 
+<<<<<<< HEAD
 def payment(request):
     if request.method == "POST":
         total_final = request.POST.get("total_final")
@@ -131,6 +132,9 @@ def payment(request):
     # Passa os produtos para o template
 
 
+=======
+@login_required
+>>>>>>> 60e0126bb722d58f311ae6cee3761b875bbbcf3d
 def remover_produto_carrinho(request):
     if request.method == "POST":
         produto_id = request.POST.get("produto_id")
@@ -152,11 +156,41 @@ def remover_produto_carrinho(request):
             messages.error(request, "Produto não encontrado para remoção.")
     else:
         messages.error(request, "Erro metodo post")
+<<<<<<< HEAD
+
+    return redirect("confirmar_compra")  # Redireciona para a página de confirmação de compra
+=======
+>>>>>>> 60e0126bb722d58f311ae6cee3761b875bbbcf3d
 
     return redirect("confirmar_compra")  # Redireciona para a página de confirmação de compra
 
+    #         print("Requisição recebida!")
+    #         data = json.loads(request.body)
+    #         print(f"Dados recebidos: {data}")
+    #         produto_id = data.get('produto_id')
+    #         print(f"Produto ID: {produto_id}")
+            
+    #         if produto_id is None:
+    #             print("ID do produto não fornecido.")
+    #             return JsonResponse({'error': 'ID do produto não fornecido.'}, status=400)
 
+    #         produtos = request.session.get('produtos_selecionados', [])
+    #         print(f"Produtos antes da remoção: {produtos}")
+    #         produtos = [p for p in produtos if p['id'] != produto_id]
+    #         print(f"Produtos após a remoção: {produtos}")
 
+    #         request.session['produtos_selecionados'] = produtos
+    #         request.session.modified = True
+
+    #         print("Produto removido com sucesso.")
+    #         return JsonResponse({'success': True})
+    #     except Exception as e:
+    #         print(f"Erro: {e}")
+    #         return JsonResponse({'error': str(e)}, status=500)
+    # else:
+    #     print("Método não permitido.")
+    #     return JsonResponse({'error': 'Método não permitido.'}, status=405)
+            
 # SubPaginas Produtos
 
 @login_required
