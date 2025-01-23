@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de QR Code Pix</title>
+</head>
+<body>
+  <h1>Gerador de QR Code Pix</h1>
+  <label for="valor">Valor (R$):</label>
+  <input type="text" id="valor" placeholder="Digite o valor">
+  <button onclick="gerarQRCode()">Gerar QR Code</button>
+  <br>
+  <img id="qrcode" src="" alt="QR Code">
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    function calcularCRC16(payload) {
+      const polinomio = 0x1021; // Polinômio CRC16
+      let resultado = 0xffff;  // Valor inicial
+
+      for (let i = 0; i < payload.length; i++) {
+        resultado ^= payload.charCodeAt(i) << 8; // XOR do byte atual com o resultado
+
+        for (let bit = 0; bit < 8; bit++) {
+          if (resultado & 0x8000) { // Verifica se o bit mais significativo é 1
+            resultado = (resultado << 1) ^ polinomio;
+          } else {
+            resultado = resultado << 1;
+          }
+        }
+
+        resultado &= 0xffff; // Garante que o valor tenha 16 bits
+      }
+
+      // Retorna o valor CRC16 formatado como uma string hexadecimal de 4 dígitos
+      console.log(resultado.toString(16).toUpperCase().padStart(4, "0"));
+      return resultado.toString(16).toUpperCase().padStart(4, "0");
+    }
+
+    // Exemplo de uso:
+    function gerarPayloadPixComCRC(payloadBase) {
+      // Adiciona o marcador de CRC16 (6304) ao payload
+      const payloadComMarcadorCRC = payloadBase;
+
+      // Calcula o CRC16 do payload (incluindo o marcador)
+      const crc16 = calcularCRC16(payloadComMarcadorCRC);
+
+      // Retorna o payload completo com o CRC16 calculado
+      return payloadComMarcadorCRC + crc16;
+    }
+
+    function gerarQRCode() {
+      const chavePix = "22429748746";  // Exemplo de chave Pix (CPF)
+      const valor = parseFloat(document.getElementById("valor").value).toFixed(2);  // Valor a ser pago (em reais)
+      const nomeDestinatario = "Benedito";
+      const cidade = "Fortaleza";  // Cidade do destinatário
+
+      // Criando o Payload Pix conforme padrão fornecido
+      const payload = `00020126330014BR.GOV.BCB.PIX0111${chavePix}5204000053039865405${valor}5802BR5901N6001C62120508${nomeDestinatario}6304`;
+      payloadCompleto = gerarPayloadPixComCRC(payload)
+      console.log(payloadCompleto)
+      // Gerar o QR Code e definir como src da imagem
+      QRCode.toDataURL(payloadCompleto, function (error, url) {
+        if (error) {
+          console.error(error);
+        } else {
+          document.getElementById("qrcode").src = url;  // Definir a imagem gerada
+          console.log("QR Code gerado com sucesso!");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
