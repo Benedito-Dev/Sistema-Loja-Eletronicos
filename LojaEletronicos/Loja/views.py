@@ -116,14 +116,12 @@ def payment(request):
     if request.method == "POST":
         total_final = request.POST.get("total_final")
         metodo_pagamento = request.POST.get("metodo_pagamento")
-        print(metodo_pagamento)
-        print(total_final)
 
         # Processar o pagamento aqui
         # Exemplo de lógica:
-        if metodo_pagamento == "pix":
-            # Processar pagamento via Pix
-            pass
+        # if metodo_pagamento == "pix":
+        #     # Processar pagamento via Pix
+        #     pass
 
         # Retorne uma resposta para o cliente
         return render(request, 'vendas/payment.html', {'metodo_de_pagamento' : metodo_pagamento, 'total' : total_final})
