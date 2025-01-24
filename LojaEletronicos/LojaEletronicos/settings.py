@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+AUTH_USER_MODEL = 'Loja.CustomUser'
+
 
 # Application definition
 
@@ -131,3 +133,8 @@ LOGIN_REDIRECT_URL = '/home/'  # URL da página inicial ou outra página após l
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'Loja.backends.EmailBackend', 
+    'django.contrib.auth.backends.ModelBackend',
+]
