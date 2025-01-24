@@ -91,7 +91,6 @@
                 <div class="content w-75 shadow rounded p-4">
                     <h2 class="text-center mb-4" style="color: #5c5c5c; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">
                         Detalhes do Pagamento
-                        <input id="tipo_de_pagamento" type="text" placeholder="{{ metodo_de_pagamento|default:"Não especificado" }}" value="{{ metodo_de_pagamento|default:"Não especificado" }}">
                     </h2>
 
                     <!-- Exibindo o método de pagamento -->
@@ -110,12 +109,12 @@
                             <div class="text-center">
                                 <h3 class="mb-3" style="color: #28a745;">Pagamento via Pix</h3>
                                 <p>Use o QR Code abaixo para concluir o pagamento:</p>
-                                <img id="qrcode" src="" alt="QR Code">
+                                <!-- <img id="qrcode" src="" alt="QR Code"> -->
+                                <img src="{% static 'img/vendas/qrcode-pix.png' %}" class="img-fluid" alt="QR Code Pix" style="max-width: 200px;">
                                 <p>Após concluir o pagamento, clique em "Confirmar Pagamento" para
                                     atualizar o status do pagamento.</p>
                                 
-                                    <button id="confirmar-pagamento" class="btn btn-success">Confirmar Pagamento</button>
-                                {% comment %} <img src="{% static 'img/vendas/qrcode-pix.png' %}" class="img-fluid border rounded shadow-sm" alt="QR Code Pix" style="max-width: 200px;"> {% endcomment %}
+                                <button id="confirmar-pagamento" class="btn btn-success">Confirmar Pagamento</button>
                             </div>
                         {% elif metodo_de_pagamento == "cartao_credito" %}
                             <div class="text-center">

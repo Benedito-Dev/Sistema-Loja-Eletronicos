@@ -23,11 +23,17 @@ function configurarSidebar() {
 // Configurações de Pagamento
 function configurarPagamento() {
     const pagamento = document.getElementById('tipo_de_pagamento');
+    console.log(pagamento)
     if (!pagamento) return;
 
     if (pagamento.value === 'pix') {
-        configurarPix();
-    } else if (pagamento.value === 'cartao') {
+        const confirmarPagamento = document.getElementById('confirmar-pagamento');
+  
+        confirmarPagamento.addEventListener('click', function () {
+            alert("Pagamento confirmado");
+            window.location.href = "http://127.0.0.1:8000/produtos/listar";
+        });
+    } else if (pagamento.value === 'cartao_credito') {
         configurarCartaoCredito();
     }
 }
@@ -76,33 +82,50 @@ function gerarPayloadPixComCRC(payloadBase) {
     return payloadBase + crc16;
 }
 
-// Configura pagamento via cartão de crédito
 function configurarCartaoCredito() {
     const pagarCartao = document.getElementById("validar-cartao");
-    if (!pagarCartao) return;
 
-    pagarCartao.addEventListener("click", function () {
+    pagarCartao.addEventListener('click', function() {
         const cardNumber = document.getElementById('cardNumber');
         const expirationDate = document.getElementById('expirationDate');
         const cvv = document.getElementById('cvv');
-        console.log(validarCartao(cardNumber, expirationDate, cvv))
         if (validarCartao(cardNumber, expirationDate, cvv)) {
             alert("Pagamento confirmado");
             window.location.href = "http://127.0.0.1:8000/produtos/listar";
         } else {
             alert("Dados do cartão inválidos!");
         }
-    });
+
+    })
 }
 
-function validarCartao(cardNumber, expirationDate, cvv) {
-    const cardRegex = /^\d{4} \d{4} \d{4} \d{4}$/; // Ex: 1234 5678 9012 3456
-    const expirationRegex = /^(0[1-9]|1[0-2])\/\d{2}$/; // Ex: MM/AA
-    const cvvRegex = /^\d{3}$/; // CVV de 3 dígitos
+// Configura pagamento via cartão de crédito
+// function configurarCartaoCredito() {
+//     const pagarCartao = document.getElementById("validar-cartao");
+//     if (!pagarCartao) return;
 
-    return (
-        cardRegex.test(cardNumber.value) &&
-        expirationRegex.test(expirationDate.value) &&
-        cvvRegex.test(cvv.value)
-    );
+//     pagarCartao.addEventListener("click", function () {
+//         const cardNumber = document.getElementById('cardNumber');
+//         const expirationDate = document.getElementById('expirationDate');
+//         const cvv = document.getElementById('cvv');
+//         console.log(validarCartao(cardNumber, expirationDate, cvv))
+//         if (validarCartao(cardNumber, expirationDate, cvv)) {
+//             alert("Pagamento confirmado");
+//             window.location.href = "http://127.0.0.1:8000/produtos/listar";
+//         } else {
+//             alert("Dados do cartão inválidos!");
+//         }
+//     });
+// }
+
+function validarCartao(cardNumber, expirationDate, cvv) {
+     const cardRegex = /^\d{4} \d{4} \d{4} \d{4}$/; // Ex: 1234 5678 9012 3456
+     const expirationRegex = /^(0[1-9]|1[0-2])\/\d{2}$/; // Ex: MM/AA
+     const cvvRegex = /^\d{3}$/; // CVV de 3 dígitos
+
+     return (
+         cardRegex.test(cardNumber.value) &&
+         expirationRegex.test(expirationDate.value) &&
+         cvvRegex.test(cvv.value)
+     );
 }
