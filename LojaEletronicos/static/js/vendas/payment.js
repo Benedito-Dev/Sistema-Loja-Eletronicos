@@ -27,12 +27,7 @@ function configurarPagamento() {
     if (!pagamento) return;
 
     if (pagamento.value === 'pix') {
-        const confirmarPagamento = document.getElementById('confirmar-pagamento');
-  
-        confirmarPagamento.addEventListener('click', function () {
-            alert("Pagamento confirmado");
-            window.location.href = "http://127.0.0.1:8000/produtos/listar";
-        });
+        configurarPix();
     } else if (pagamento.value === 'cartao_credito') {
         configurarCartaoCredito();
     }
